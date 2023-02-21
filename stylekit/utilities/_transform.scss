@@ -1,0 +1,32 @@
+@use "../core";
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Transform
+// -----------------------------------------------------------------------------
+
+$origin: map.get(core.$compiled-config, utilities, transform, origin);
+$rotate: map.get(core.$compiled-config, utilities, transform, rotate);
+$scale: map.get(core.$compiled-config, utilities, transform, scale);
+$skew: map.get(core.$compiled-config, utilities, transform, skew);
+$translate-x: map.get(core.$compiled-config, utilities, transform, translate-x);
+$translate-y: map.get(core.$compiled-config, utilities, transform, translate-y);
+$translate-z: map.get(core.$compiled-config, utilities, transform, translate-z);
+
+.#{core.$prefix}transform {
+  --#{core.$prefix}origin: #{$origin};
+  --#{core.$prefix}rotate: #{$rotate};
+  --#{core.$prefix}scale: #{$scale};
+  --#{core.$prefix}skew: #{$skew};
+  --#{core.$prefix}translate-x: #{$translate-x};
+  --#{core.$prefix}translate-y: #{$translate-y};
+  --#{core.$prefix}translate-z: #{$translate-z};
+
+  transform: rotate(
+    var(--#{core.$prefix}rotate))
+    scale(var(--#{core.$prefix}scale))
+    skew(var(--#{core.$prefix}skew))
+    translate3d(var(--#{core.$prefix}translate-x), var(--#{core.$prefix}translate-y), var(--#{core.$prefix}translate-z));
+  transform-origin: var(--#{core.$prefix}origin);
+}
+

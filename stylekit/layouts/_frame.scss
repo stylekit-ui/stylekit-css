@@ -1,0 +1,71 @@
+@use '../core';
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Frame
+// Frame makes its child element responsive with a set aspect ratio. Often used
+// for media elements.
+// -----------------------------------------------------------------------------
+
+$object-x: map.get(core.$compiled-config, layouts, frame, object-x);
+$object-y: map.get(core.$compiled-config, layouts, frame, object-y);
+$object-fit: map.get(core.$compiled-config, layouts, frame, object-fit);
+$ratio: map.get(core.$compiled-config, layouts, frame, ratio);
+
+.#{core.$prefix}layout-frame {
+  --#{core.$prefix}object-x: #{$object-x};
+  --#{core.$prefix}object-y: #{$object-y};
+  --#{core.$prefix}object-fit: #{$object-fit};
+  --#{core.$prefix}ratio: #{$ratio};
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  @supports (aspect-ratio: var(--#{core.$prefix}ratio)) {
+	  aspect-ratio: var(--#{core.$prefix}ratio);
+  }
+
+  @supports not (aspect-ratio: var(--#{core.$prefix}ratio)) {
+	  padding-bottom: calc(100% / (var(--#{core.$prefix}ratio)));
+  }
+
+  > * {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  bottom: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  object-fit: var(--#{core.$prefix}object-fit);
+	  object-position: var(--#{core.$prefix}object-x) var(--#{core.$prefix}object-y);
+  }
+
+  @if (core.$merged-breakpoints != null) {
+	  $prev-breakpoint: null;
+	  @each $breakpoint in map.keys(core.$merged-breakpoints) {
+      $namespace: #{core.$prefix}#{$breakpoint};
+		  @include core.media($breakpoint) {
+			  --#{$namespace}-ratio: var(--#{$prev-breakpoint}ratio);
+			  --#{$namespace}-object-x: var(--#{$prev-breakpoint}object-x);
+			  --#{$namespace}-object-y: var(--#{$prev-breakpoint}object-y);
+			  --#{$namespace}-object-fit: var(--#{$prev-breakpoint}object-fit);
+
+			  @supports (aspect-ratio: var(--#{core.$prefix}ratio)) {
+				  aspect-ratio: var(--#{$namespace}-ratio);
+			  }
+
+			  @supports not (aspect-ratio: var(--#{core.$prefix}ratio)) {
+				  padding-bottom: calc(100% / (var(--#{$namespace}-ratio)));
+			  }
+
+			  > * {
+				  object-fit: var(--#{$namespace}-object-fit);
+				  object-position: var(--#{$namespace}-object-x) var(--#{$namespace}-object-y);
+			  }
+		  }
+		  $prev-breakpoint: #{$namespace}-;
+	  }
+  }
+}

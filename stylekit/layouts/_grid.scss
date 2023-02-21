@@ -1,0 +1,81 @@
+@use "../core";
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Grid
+// Build responsive grid systems with total layout freedom using one single
+// class and custom properties.
+// -----------------------------------------------------------------------------
+
+.#{core.$prefix}layout-grid {
+	--#{core.$prefix}columns: 1;
+	--#{core.$prefix}size: 1fr;
+	--#{core.$prefix}align: normal;
+	--#{core.$prefix}justify: normal;
+	--#{core.$prefix}place: normal;
+	--#{core.$prefix}gap: 0;
+	--#{core.$prefix}width: auto;
+
+	display: grid;
+	grid-template-columns: repeat(var(--#{core.$prefix}columns), var(--#{core.$prefix}size));
+	align-items: var(--#{core.$prefix}align);
+	justify-items: var(--#{core.$prefix}justify);
+	place-content: var(--#{core.$prefix}place);
+	gap: var(--#{core.$prefix}gap);
+	width: var(--#{core.$prefix}width);
+
+	> * {
+		--#{core.$prefix}column: auto;
+		--#{core.$prefix}row: auto;
+		--#{core.$prefix}align: auto;
+		--#{core.$prefix}justify: auto;
+
+		grid-column: var(--#{core.$prefix}column);
+		grid-row: var(--#{core.$prefix}row);
+		align-self: var(--#{core.$prefix}align);
+		justify-self: var(--#{core.$prefix}justify);
+		min-width: 0;
+		max-width: 100%;
+		min-height: 0;
+	}
+
+  &.is-inline {
+    display: inline-grid;
+  }
+
+	@if (core.$merged-breakpoints != null) {
+		$prev-breakpoint: null;
+		@each $breakpoint in map.keys(core.$merged-breakpoints) {
+			$namespace: #{core.$prefix}#{$breakpoint};
+			@include core.media($breakpoint) {
+				--#{$namespace}-columns: var(--#{$prev-breakpoint}columns);
+				--#{$namespace}-size: var(--#{$prev-breakpoint}size);
+				--#{$namespace}-align: var(--#{$prev-breakpoint}align);
+				--#{$namespace}-justify: var(--#{$prev-breakpoint}justify);
+				--#{$namespace}-place: var(--#{$prev-breakpoint}place);
+				--#{$namespace}-gap: var(--#{$prev-breakpoint}gap);
+				--#{$namespace}-width: var(--#{$prev-breakpoint}width);
+
+				grid-template-columns: repeat(var(--#{$namespace}-columns), var(--#{$namespace}-size));
+				align-items: var(--#{$namespace}-align);
+				justify-items: var(--#{$namespace}-justify);
+				place-content: var(--#{$namespace}-place);
+				gap: var(--#{$namespace}-gap);
+				width: var(--#{$namespace}-width);
+
+				> * {
+					--#{$namespace}-column: var(--#{$prev-breakpoint}column);
+					--#{$namespace}-row: var(--#{$prev-breakpoint}row);
+					--#{$namespace}-align: var(--#{$prev-breakpoint}align);
+					--#{$namespace}-justify: var(--#{$prev-breakpoint}justify);
+
+					grid-column: var(--#{$namespace}-column);
+					grid-row: var(--#{$namespace}-row);
+					align-self: var(--#{$namespace}-align);
+					justify-self: var(--#{$namespace}-justify);
+				}
+			}
+			$prev-breakpoint: #{$namespace}-;
+		}
+	}
+}

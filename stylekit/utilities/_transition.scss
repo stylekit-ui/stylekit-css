@@ -1,0 +1,23 @@
+@use "../core";
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Transition
+// -----------------------------------------------------------------------------
+
+$property: map.get(core.$compiled-config, utilities, transition, property);
+$duration: map.get(core.$compiled-config, utilities, transition, duration);
+$delay: map.get(core.$compiled-config, utilities, transition, delay);
+$easing: map.get(core.$compiled-config, utilities, transition, easing);
+
+.#{core.$prefix}transition {
+  --#{core.$prefix}property: #{$property};
+  --#{core.$prefix}duration: #{$duration};
+  --#{core.$prefix}delay: #{$delay};
+  --#{core.$prefix}easing: #{$easing};
+
+  transition-property: var(--#{core.$prefix}property);
+  transition-duration: var(--#{core.$prefix}duration);
+  transition-delay: var(--#{core.$prefix}delay);
+  transition-timing-function: var(--#{core.$prefix}easing);
+}

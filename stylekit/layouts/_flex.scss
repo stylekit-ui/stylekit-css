@@ -1,0 +1,93 @@
+@use "../core";
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Flex
+// Flex handles box alignment and element composition with endless flexibility
+// using one single class and custom properties.
+// -----------------------------------------------------------------------------
+
+
+.#{core.$prefix}layout-flex {
+  --#{core.$prefix}direction: row;
+  --#{core.$prefix}wrap: wrap;
+  --#{core.$prefix}align: normal;
+  --#{core.$prefix}place: normal;
+  --#{core.$prefix}gap: 0;
+  --#{core.$prefix}width: auto;
+
+  display: flex;
+  flex-direction: var(--#{core.$prefix}direction);
+  flex-wrap: var(--#{core.$prefix}wrap);
+  align-items: var(--#{core.$prefix}align);
+  place-content: var(--#{core.$prefix}place);
+  gap: var(--#{core.$prefix}gap);
+  width: var(--#{core.$prefix}width);
+
+  > * {
+	  --#{core.$prefix}basis: auto;
+	  --#{core.$prefix}grow: 0;
+	  --#{core.$prefix}shrink: 1;
+	  --#{core.$prefix}align: auto;
+	  --#{core.$prefix}order: 0;
+	  --#{core.$prefix}width: auto;
+	  --#{core.$prefix}min-width: 0;
+	  --#{core.$prefix}max-width: none;
+
+	  flex-basis: var(--#{core.$prefix}basis);
+	  flex-grow: var(--#{core.$prefix}grow);
+	  flex-shrink: var(--#{core.$prefix}shrink);
+	  align-self: var(--#{core.$prefix}align);
+	  order: var(--#{core.$prefix}order);
+	  width: var(--#{core.$prefix}width);
+	  min-width: var(--#{core.$prefix}min-width);
+	  max-width: var(--#{core.$prefix}max-width);
+  }
+
+  &.is-inline {
+    display: inline-flex;
+  }
+
+  @if (core.$merged-breakpoints != null) {
+	  $prev-breakpoint: null;
+	  @each $breakpoint in map.keys(core.$merged-breakpoints) {
+      $namespace: #{core.$prefix}#{$breakpoint};
+		  @include core.media($breakpoint) {
+			  --#{$namespace}-direction: var(--#{$prev-breakpoint}direction);
+			  --#{$namespace}-wrap: var(--#{$prev-breakpoint}wrap);
+			  --#{$namespace}-align: var(--#{$prev-breakpoint}align);
+			  --#{$namespace}-place: var(--#{$prev-breakpoint}place);
+			  --#{$namespace}-gap: var(--#{$prev-breakpoint}gap);
+			  --#{$namespace}-width: var(--#{$prev-breakpoint}width);
+
+			  flex-direction: var(--#{$namespace}-direction);
+			  flex-wrap: var(--#{$namespace}-wrap);
+			  align-items: var(--#{$namespace}-align);
+			  place-content: var(--#{$namespace}-place);
+			  gap: var(--#{$namespace}-gap);
+			  width: var(--#{$namespace}-width);
+
+			  > * {
+				  --#{$namespace}-basis: var(--#{$prev-breakpoint}basis);
+				  --#{$namespace}-grow: var(--#{$prev-breakpoint}grow);
+				  --#{$namespace}-shrink: var(--#{$prev-breakpoint}shrink);
+				  --#{$namespace}-align: var(--#{$prev-breakpoint}align);
+				  --#{$namespace}-order: var(--#{$prev-breakpoint}order);
+				  --#{$namespace}-width: var(--#{$prev-breakpoint}width);
+				  --#{$namespace}-min-width: var(--#{$prev-breakpoint}min-width);
+				  --#{$namespace}-max-width: var(--#{$prev-breakpoint}max-width);
+
+				  flex-basis: var(--#{$namespace}-basis);
+				  flex-grow: var(--#{$namespace}-grow);
+				  flex-shrink: var(--#{$namespace}-shrink);
+				  align-self: var(--#{$namespace}-align);
+				  order: var(--#{$namespace}-order);
+				  width: var(--#{$namespace}-width);
+				  min-width: var(--#{$namespace}-min-width);
+				  max-width: var(--#{$namespace}-max-width);
+			  }
+		  }
+		  $prev-breakpoint: #{$namespace}-;
+	  }
+  }
+}

@@ -1,0 +1,34 @@
+@use "../core";
+@use 'sass:map';
+
+// -----------------------------------------------------------------------------
+// Stretch link
+// -----------------------------------------------------------------------------
+
+$z-index: map.get(core.$compiled-config, utilities, stretch-link, z-index);
+
+.#{core.$prefix}stretch-link {
+  --#{core.$prefix}z-index: #{$z-index};
+
+  position: static;
+
+  &::before {
+	  content: '';
+	  display: block;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: var(--#{core.$prefix}z-index);
+	  width: 100%;
+	  height: 100%;
+	  cursor: pointer;
+  }
+
+  &:focus {
+	  outline: none;
+  }
+
+  &:focus::before {
+	  outline: var(--#{core.$prefix}outline-width) var(--#{core.$prefix}outline-type) var(--#{core.$prefix}outline-color);
+  }
+}

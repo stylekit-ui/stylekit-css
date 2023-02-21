@@ -1,0 +1,241 @@
+@use 'sass:map';
+@use 'functions';
+
+// -----------------------------------------------------------------------------
+// User config
+// -----------------------------------------------------------------------------
+
+$config: () !default;
+
+// -----------------------------------------------------------------------------
+// Default config
+// -----------------------------------------------------------------------------
+
+$default-config: (
+	prefix: null,
+	theme: (
+		breakpoints: (
+			sm: 30em,
+			md: 60em,
+			lg: 90em
+		),
+		colors: (
+			white: #ffffff,
+			black: #000000
+		),
+		font-family: (
+			sans: 'system-ui, sans-serif',
+			serif: 'serif',
+			mono: 'monospace'
+		),
+		font-size: (
+			nano: 0.75rem,
+			tiny: 1rem,
+			small: 1.5rem,
+			medium: 2rem,
+			large: 4rem,
+			mega: 6rem
+		),
+		font-weight: (
+			thin: 300,
+			regular: 400,
+			bold: 700
+		),
+		letter-spacing: (
+			narrow: -0.025em,
+			wide: 0.025em
+		),
+		line-height: (
+			none: 1,
+			tight: 1.25,
+			loose: 2
+		),
+		outline: (
+			width: 0.125rem,
+			type: solid,
+			color: currentcolor
+		),
+		spacing: (
+			nano: 0.5rem,
+			tiny: 1rem,
+			small: 1.5rem,
+			medium: 2rem,
+			large: 4rem,
+			mega: 8rem
+		),
+		reset: (
+			breakpoints: (),
+			colors: (),
+			font-family: (),
+			font-size: (),
+			font-weight: (),
+			letter-spacing: (),
+			line-height: (),
+			outline: (),
+			spacing: ()
+		)
+	),
+	layouts: (
+		flow: (
+			space: var(--space-medium)
+		),
+		frame: (
+			object-x: 50%,
+			object-y: 50%,
+			object-fit: cover,
+			ratio: '1/1'
+		),
+		wrap: (
+			max-width: 80rem,
+			margin-right: auto,
+			margin-left: auto,
+			padding: clamp(2rem, 10vw, 4rem)
+		),
+	),
+	utilities: (
+		stretch-link: (
+			z-index: 1
+		),
+		transform: (
+			origin: center,
+			rotate: 0deg,
+			scale: 1,
+			skew: 0deg,
+			translate-x: 0,
+			translate-y: 0,
+			translate-z: 0
+		),
+		transition: (
+			property: all,
+			duration: 200ms,
+			delay: 0ms,
+			easing: cubic-bezier(0.5, 0, 0.25, 1)
+		),
+		truncate-line: 1
+	),
+	variables: ()
+) !default;
+
+// -----------------------------------------------------------------------------
+// Config compiler
+// -----------------------------------------------------------------------------
+
+$compiled-config: map.deep-merge($default-config, $config);
+
+// -----------------------------------------------------------------------------
+// Fetch variables
+// -----------------------------------------------------------------------------
+
+$prefix: map.get($compiled-config, prefix);
+$breakpoints: map.get($compiled-config, theme, breakpoints);
+$colors: map.get($compiled-config, theme, colors);
+$font-family: map.get($compiled-config, theme, font-family);
+$font-size: map.get($compiled-config, theme, font-size);
+$font-weight: map.get($compiled-config, theme, font-weight);
+$letter-spacing: map.get($compiled-config, theme, letter-spacing);
+$line-height: map.get($compiled-config, theme, line-height);
+$outline: map.get($compiled-config, theme, outline);
+$spacing: map.get($compiled-config, theme, spacing);
+
+// Reset data
+$reset-breakpoints: map.get($compiled-config, theme, reset, breakpoints);
+$reset-colors: map.get($compiled-config, theme, reset, colors);
+$reset-font-family: map.get($compiled-config, theme, reset, font-family);
+$reset-font-size: map.get($compiled-config, theme, reset, font-size);
+$reset-font-weight: map.get($compiled-config, theme, reset, font-weight);
+$reset-letter-spacing: map.get($compiled-config, theme, reset, letter-spacing);
+$reset-line-height: map.get($compiled-config, theme, reset, line-height);
+$reset-outline: map.get($compiled-config, theme, reset, outline);
+$reset-spacing: map.get($compiled-config, theme, reset, spacing);
+
+// Merged data
+$merged-breakpoints: ();
+@if ($breakpoints != null) {
+	$merged-breakpoints: functions.map-sort(map.deep-merge($merged-breakpoints, $breakpoints));
+}
+$merged-breakpoints: functions.map-sort(map.deep-merge($merged-breakpoints, $reset-breakpoints));
+
+$merged-colors: ();
+@if ($colors != null) {
+	$merged-colors: map.deep-merge($merged-colors, $colors);
+}
+$merged-colors: map.deep-merge($merged-colors, $reset-colors);
+
+$merged-font-family: ();
+@if ($font-family != null) {
+	$merged-font-family: map.deep-merge($merged-font-family, $font-family);
+}
+$merged-font-family: map.deep-merge($merged-font-family, $reset-font-family);
+
+$merged-font-size: ();
+@if ($font-size != null) {
+	$merged-font-size: map.deep-merge($merged-font-size, $font-size);
+}
+$merged-font-size: map.deep-merge($merged-font-size, $reset-font-size);
+
+$merged-font-weight: ();
+@if ($font-weight != null) {
+	$merged-font-weight: map.deep-merge($merged-font-weight, $font-weight);
+}
+$merged-font-weight: map.deep-merge($merged-font-weight, $reset-font-weight);
+
+$merged-letter-spacing: ();
+@if ($letter-spacing != null) {
+	$merged-letter-spacing: map.deep-merge($merged-letter-spacing, $letter-spacing);
+}
+$merged-letter-spacing: map.deep-merge($merged-letter-spacing, $reset-letter-spacing);
+
+$merged-line-height: ();
+@if ($line-height != null) {
+	$merged-line-height: map.deep-merge($merged-line-height, $line-height);
+}
+$merged-line-height: map.deep-merge($merged-line-height, $reset-line-height);
+
+$merged-outline: ();
+@if ($outline != null) {
+	$merged-outline: map.deep-merge($merged-outline, $outline);
+}
+$merged-outline: map.deep-merge($merged-outline, $reset-outline);
+
+$merged-spacing: ();
+@if ($spacing != null) {
+	$merged-spacing: map.deep-merge($merged-spacing, $spacing);
+}
+$merged-spacing: map.deep-merge($merged-spacing, $reset-spacing);
+
+// -----------------------------------------------------------------------------
+// Sass mixins
+// -----------------------------------------------------------------------------
+
+// Media
+// Wrap the content in a media breakpoint.
+// @param {String} $size - Key from the map with breakpoints or a custom set width
+// @param {String} $type - Breakpoint type min or max
+// -----------------------------------------------------------------------------
+
+@mixin media($size, $type: min) {
+	@if map.has-key($merged-breakpoints, $size) {
+		$size: map.get($merged-breakpoints, $size);
+	} @else {
+		$size: $size;
+	}
+	@media (#{$type}-width: $size) {
+		@content;
+	}
+}
+
+// Generate variables
+// Loop each item in the $variables object and create matching variables.
+// @param {Map} $data - Config object with settings and variables map
+// -----------------------------------------------------------------------------
+
+@mixin generate-variables($data) {
+	$variables: map.get($data, variables);
+	@each $id, $collection in $variables {
+		$variable: map.get($collection, 'variable');
+		$variants: map.get($collection, 'variants');
+		@each $key, $value in $variants {
+			--#{$prefix}#{$variable}-#{'' + $key}: #{$value};
+		}
+	}
+}
