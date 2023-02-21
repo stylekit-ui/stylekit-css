@@ -1,0 +1,12 @@
+// Load Stylekit core functions
+@use 'stylekit/core/functions';
+
+// Load and configure Stylekit
+@use 'stylekit' as * with (
+	$config: (
+		theme: (),
+		layouts: (),
+		utilities: (),
+		variables: ()
+	)
+);
