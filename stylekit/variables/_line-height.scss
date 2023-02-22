@@ -6,7 +6,7 @@ $config: (
 	variables: (
 		line-height: (
 			variable: leading,
-			variants: (core.$merged-line-height)
+			variants: (core.$line-height)
 		)
 	)
 );

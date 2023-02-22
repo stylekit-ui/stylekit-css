@@ -6,7 +6,7 @@ $config: (
 	variables: (
 		letter-spacing: (
 			variable: tracking,
-			variants: (core.$merged-letter-spacing)
+			variants: (core.$letter-spacing)
 		)
 	)
 );

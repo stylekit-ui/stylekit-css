@@ -8,7 +8,7 @@ $config: (
 			variable: color,
 			variants: (
 				functions.merge(
-					core.$merged-colors,
+					core.$colors,
 					(
 						transparent: transparent,
 						current: currentcolor

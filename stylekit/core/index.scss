@@ -126,6 +126,7 @@ $compiled-config: map.deep-merge($default-config, $config);
 // Fetch variables
 // -----------------------------------------------------------------------------
 
+// Default data
 $prefix: map.get($compiled-config, prefix);
 $breakpoints: map.get($compiled-config, theme, breakpoints);
 $colors: map.get($compiled-config, theme, colors);
@@ -148,60 +149,16 @@ $reset-line-height: map.get($compiled-config, theme, reset, line-height);
 $reset-outline: map.get($compiled-config, theme, reset, outline);
 $reset-spacing: map.get($compiled-config, theme, reset, spacing);
 
-// Merged data
-$merged-breakpoints: ();
-@if ($breakpoints != null) {
-	$merged-breakpoints: functions.map-sort(map.deep-merge($merged-breakpoints, $breakpoints));
-}
-$merged-breakpoints: functions.map-sort(map.deep-merge($merged-breakpoints, $reset-breakpoints));
-
-$merged-colors: ();
-@if ($colors != null) {
-	$merged-colors: map.deep-merge($merged-colors, $colors);
-}
-$merged-colors: map.deep-merge($merged-colors, $reset-colors);
-
-$merged-font-family: ();
-@if ($font-family != null) {
-	$merged-font-family: map.deep-merge($merged-font-family, $font-family);
-}
-$merged-font-family: map.deep-merge($merged-font-family, $reset-font-family);
-
-$merged-font-size: ();
-@if ($font-size != null) {
-	$merged-font-size: map.deep-merge($merged-font-size, $font-size);
-}
-$merged-font-size: map.deep-merge($merged-font-size, $reset-font-size);
-
-$merged-font-weight: ();
-@if ($font-weight != null) {
-	$merged-font-weight: map.deep-merge($merged-font-weight, $font-weight);
-}
-$merged-font-weight: map.deep-merge($merged-font-weight, $reset-font-weight);
-
-$merged-letter-spacing: ();
-@if ($letter-spacing != null) {
-	$merged-letter-spacing: map.deep-merge($merged-letter-spacing, $letter-spacing);
-}
-$merged-letter-spacing: map.deep-merge($merged-letter-spacing, $reset-letter-spacing);
-
-$merged-line-height: ();
-@if ($line-height != null) {
-	$merged-line-height: map.deep-merge($merged-line-height, $line-height);
-}
-$merged-line-height: map.deep-merge($merged-line-height, $reset-line-height);
-
-$merged-outline: ();
-@if ($outline != null) {
-	$merged-outline: map.deep-merge($merged-outline, $outline);
-}
-$merged-outline: map.deep-merge($merged-outline, $reset-outline);
-
-$merged-spacing: ();
-@if ($spacing != null) {
-	$merged-spacing: map.deep-merge($merged-spacing, $spacing);
-}
-$merged-spacing: map.deep-merge($merged-spacing, $reset-spacing);
+// Select which data source to use
+$breakpoints: if($breakpoints != null, $breakpoints, $reset-breakpoints);
+$colors: if($colors != null, $colors, $reset-colors);
+$font-family: if($font-family != null, $font-family, $reset-font-family);
+$font-size: if($font-size != null, $font-size, $reset-font-size);
+$font-weight: if($font-weight != null, $font-weight, $reset-font-weight);
+$letter-spacing: if($letter-spacing != null, $letter-spacing, $reset-letter-spacing);
+$line-height: if($line-height != null, $line-height, $reset-line-height);
+$outline: if($outline != null, $outline, $reset-outline);
+$spacing: if($spacing != null, $spacing, $reset-spacing);
 
 // -----------------------------------------------------------------------------
 // Sass mixins
@@ -214,8 +171,8 @@ $merged-spacing: map.deep-merge($merged-spacing, $reset-spacing);
 // -----------------------------------------------------------------------------
 
 @mixin media($size, $type: min) {
-	@if map.has-key($merged-breakpoints, $size) {
-		$size: map.get($merged-breakpoints, $size);
+	@if map.has-key($breakpoints, $size) {
+		$size: map.get($breakpoints, $size);
 	} @else {
 		$size: $size;
 	}

@@ -42,9 +42,9 @@ $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 	  object-position: var(--#{core.$prefix}object-x) var(--#{core.$prefix}object-y);
   }
 
-  @if (core.$merged-breakpoints != null) {
+  @if (core.$breakpoints != null) {
 	  $prev-breakpoint: null;
-	  @each $breakpoint in map.keys(core.$merged-breakpoints) {
+	  @each $breakpoint in map.keys(core.$breakpoints) {
       $namespace: #{core.$prefix}#{$breakpoint};
 		  @include core.media($breakpoint) {
 			  --#{$namespace}-ratio: var(--#{$prev-breakpoint}ratio);
