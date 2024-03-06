@@ -21,7 +21,7 @@ In the following example, the system initially searches for the Stylekit module 
 
 ```json
 "scripts": {
-	"dev": "sass --load-path=./node_modules/stylekit-css --load-path=./ --load-path=./custom-path index.scss dist/stylekit.css --no-source-map --style expanded --watch"
+  "dev": "sass --load-path=./node_modules/stylekit-css --load-path=./ --load-path=./custom-path index.scss dist/stylekit.css --no-source-map --style expanded --watch"
 },
 ```
 
@@ -72,30 +72,30 @@ The compiled styling file and its path may vary based on your build script.
 ```scss
 // index.scss
 @use "stylekit" as * with (
-	$config: (
-		theme: (
-			breakpoints: (
-				md: 800px,
-				lg: 1600px
-			),
-			extend: (
-				colors: (
-					success: green,
-					danger: red
-					),
-				spacing: (
-					xxs: 0.25rem
-				)
-			)
-			...
-		),
-		layouts: (
-			wrap: (
-				max-width: 100rem
-			)
-		),
-		...
-	)
+  $config: (
+    theme: (
+      breakpoints: (
+        md: 800px,
+        lg: 1600px
+      ),
+      extend: (
+        colors: (
+          success: green,
+          danger: red
+          ),
+        spacing: (
+          xxs: 0.25rem
+        )
+      )
+      ...
+    ),
+    layouts: (
+      wrap: (
+        max-width: 100rem
+      )
+    ),
+    ...
+  )
 );
 ```
 
@@ -104,43 +104,43 @@ The compiled styling file and its path may vary based on your build script.
 ```scss
 // index.scss
 @use "stylekit" as * with (
-	$config: (
-		theme: (...),
-		layouts: (...),
-		utilities: (
-			radius: (
-				shorthand: radius,
-				variable: radius,
-				properties: (border-radius),
-				variants: (
-					sm: 0.125rem,
-					md: 1rem,
-					lg: 2rem
-				)
-			),
-			// Utility using multiple properties
-			border-block: (
-				shorthand: border-block,
-				variants: (
-					black: (
-						border-block-style: solid,
-						border-block-width: 1px,
-						border-block-color: var(--color-black)
-					)
-				)
-			)
-		),
-		variables: (
-			radius: (
-				variable: radius,
-				variants: (
-					sm: 0.125rem,
-					md: 1rem,
-					lg: 2rem
-				)
-			)
-		)
-	)
+  $config: (
+    theme: (...),
+    layouts: (...),
+    utilities: (
+      radius: (
+        shorthand: radius,
+        variable: radius,
+        properties: (border-radius),
+        variants: (
+          sm: 0.125rem,
+          md: 1rem,
+          lg: 2rem
+        )
+      ),
+      // Utility using multiple properties
+      border-block: (
+        shorthand: border-block,
+        variants: (
+          black: (
+            border-block-style: solid,
+            border-block-width: 1px,
+            border-block-color: var(--color-black)
+          )
+        )
+      )
+    ),
+    variables: (
+      radius: (
+        variable: radius,
+        variants: (
+          sm: 0.125rem,
+          md: 1rem,
+          lg: 2rem
+        )
+      )
+    )
+  )
 );
 ```
 
@@ -148,26 +148,26 @@ The above example will result in the following CSS code:
 
 ```css
 :root {
-	--radius-sm: 0.125rem;
-	--radius-md: 1rem;
-	--radius-lg: 2rem;
+  --radius-sm: 0.125rem;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
 }
 
 .radius-sm {
-	border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm);
 }
 
 .radius-md {
-	border-radius: var(--radius-md);
+  border-radius: var(--radius-md);
 }
 
 .radius-lg {
-	border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg);
 }
 
 .border-block-black {
-	border-block-style: solid;
-	border-block-width: 1px;
-	border-block-color: var(--color-black);
+  border-block-style: solid;
+  border-block-width: 1px;
+  border-block-color: var(--color-black);
 }
 ```
