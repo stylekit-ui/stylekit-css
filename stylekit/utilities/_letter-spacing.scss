@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	utilities: (
+		letter-spacing: (
+			shorthand: tracking,
+			variable: tracking,
+			properties: (letter-spacing),
+			variants: (core.$letter-spacing)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

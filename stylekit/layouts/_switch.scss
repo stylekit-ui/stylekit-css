@@ -1,0 +1,36 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Switch
+// Switch from a single-column layout to a multi-column layout when the width of 
+// the parent element equals the specified breakpoint.
+//
+// 1. Multiply the switch flag by an arbitrarily large value to scale it to
+//    either very negative or very positive and apply it as the flex-basis. 
+//    This is what creates the switch function.
+// 2. The calc function enables the option to use fractions for the grow value.
+// -----------------------------------------------------------------------------
+
+$breakpoint: map.get(core.$compiled-config, layouts, switch, breakpoint);
+$gap: map.get(core.$compiled-config, layouts, switch, gap);
+$grow: map.get(core.$compiled-config, layouts, switch, grow);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}switch {
+		--#{core.$prefix-namespace}basis: calc((var(--#{core.$prefix-namespace}breakpoint) - 100%) * 999); // 1
+		--#{core.$prefix-namespace}breakpoint: #{$breakpoint};
+		--#{core.$prefix-namespace}gap: #{$gap};
+
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--#{core.$prefix-namespace}gap);
+
+		> * {
+			--#{core.$prefix-namespace}grow: #{$grow};
+			
+			flex-basis: max(var(--#{core.$prefix-namespace}basis), 0px);
+			flex-grow: calc(var(--#{core.$prefix-namespace}grow)); // 2
+		}
+	}
+}

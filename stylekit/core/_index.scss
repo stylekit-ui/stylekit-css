@@ -1,0 +1,412 @@
+@use 'sass:map';
+@use 'stylekit/core/functions';
+
+// -----------------------------------------------------------------------------
+// User config
+// -----------------------------------------------------------------------------
+
+$config: () !default;
+
+// -----------------------------------------------------------------------------
+// Default config
+// -----------------------------------------------------------------------------
+
+$default-config: (
+	important: null,
+	responsive: false,
+
+	exclude: (
+		preset: false,
+		layouts: false,
+		utilities: false,
+		variables: false
+	),
+
+	prefix: (
+		namespace: null,
+		utilities: null,
+		layouts: null
+	),
+	
+	theme: (
+		// Reset
+		breakpoints: (),
+		colors: (),
+		font-family: (),
+		font-size: (),
+		font-weight: (),
+		letter-spacing: (),
+		line-height: (),
+		outline: (),
+		text-align: (),
+		text-transform: (),
+		spacing: (),
+
+		// Defaults
+		extend: (
+			breakpoints: (
+				sm: 360px,
+				md: 720px,
+				lg: 1440px
+			),
+			colors: (
+				white: hsl(0, 0%, 100%),
+				black: hsl(0, 0%, 0%),
+				transparent: transparent,
+				current: currentcolor
+			),
+			font-family: (
+				sans: 'system-ui, sans-serif',
+				serif: 'serif',
+				mono: 'monospace'
+			),
+			font-size: (
+				xxs: 0.75rem,
+				xs: 0.875rem,
+				sm: 1rem,
+				md: functions.fluid-size(1.125rem, 1.25rem),
+				lg: functions.fluid-size(1.375rem, 1.5rem),
+				xl: functions.fluid-size(1.75rem, 2rem),
+				xxl: functions.fluid-size(2rem, 4rem)
+			),
+			font-weight: (
+				light: 300,
+				regular: 400,
+				medium: 500,
+				bold: 700
+			),
+			letter-spacing: (
+				sm: -0.0375em,
+				normal: 0,
+				lg: 0.0375em
+			),
+			line-height: (
+				none: 1,
+				sm: 1.25,
+				md: 1.5,
+				lg: 2,
+			),
+			text-align: (
+				left: left,
+				center: center,
+				right: right
+			),
+			text-transform: (
+				upper: uppercase,
+				lower: lowercase,
+				caps: capitalize
+			),
+			spacing: (
+				xxs: 0.5rem,
+				xs: 1rem,
+				sm: 1.5rem,
+				md: functions.fluid-size(2rem, 3rem),
+				lg: functions.fluid-size(3rem, 4rem),
+				xl: functions.fluid-size(6rem, 8rem),
+				xxl: functions.fluid-size(9rem, 12rem)
+			),
+		),
+	),
+
+	layouts: (
+		align: (
+			responsive: true,
+			items: normal,
+			content: normal,
+			self: auto
+		),
+		auto-space: (
+			space: 1em
+		),
+		flex: (
+			responsive: true,
+			flow: row,
+			wrap: nowrap,
+			gap: 0,
+			basis: auto,
+			grow: 0,
+			shrink: 1,
+			order: 0
+		),
+		frame: (
+			responsive: true,
+			object-x: 50%,
+			object-y: 50%,
+			object-fit: cover,
+			ratio: '1/1'
+		),
+		grid: (
+			responsive: true,
+			columns: 1,
+			column-size: 1fr,
+			auto-columns: normal,
+			flow: row,
+			gap: 0,
+			column: auto,
+			row: auto
+		),
+		switch: (
+			breakpoint: 0,
+			gap: 0,
+			grow: 1
+		),
+		wrap: (
+			responsive: false,
+			width: 100%,
+			max-width: 80rem,
+			margin-inline: auto,
+			padding-inline: clamp(1rem, 2%, 2rem)
+		)
+	)
+) !default;
+
+// -----------------------------------------------------------------------------
+// Config compiler
+// -----------------------------------------------------------------------------
+
+$compiled-config: map.deep-merge($default-config, $config);
+
+// -----------------------------------------------------------------------------
+// Fetch variables
+// -----------------------------------------------------------------------------
+
+// Global settings
+$important: map.get($compiled-config, important);
+
+@if ($important == true) {
+	$important: '!important';
+} @else {
+	$important: null;
+}
+
+$all-responsive: map.get($compiled-config, responsive);
+
+// Exclude
+$exclude-preset: map.get($compiled-config, exclude, preset);
+$exclude-layouts: map.get($compiled-config, exclude, layouts);
+$exclude-utilities: map.get($compiled-config, exclude, utilities);
+$exclude-variables: map.get($compiled-config, exclude, variables);
+
+// Prefix
+$prefix-namespace: map.get($compiled-config, prefix, namespace);
+$prefix-utilities: map.get($compiled-config, prefix, utilities);
+$prefix-layouts: map.get($compiled-config, prefix, layouts);
+
+@if ($prefix-namespace != null) {
+	$prefix-namespace: #{$prefix-namespace}-;
+}
+
+@if ($prefix-utilities != null) {
+	$prefix-utilities: #{$prefix-utilities}-;
+}
+
+@if ($prefix-layouts != null) {
+	$prefix-layouts: #{$prefix-layouts}-;
+}
+
+// Default data
+$extend-breakpoints: map.get($compiled-config, theme, extend, breakpoints);
+$extend-colors: map.get($compiled-config, theme, extend, colors);
+$extend-font-family: map.get($compiled-config, theme, extend, font-family);
+$extend-font-size: map.get($compiled-config, theme, extend, font-size);
+$extend-font-weight: map.get($compiled-config, theme, extend, font-weight);
+$extend-letter-spacing: map.get($compiled-config, theme, extend, letter-spacing);
+$extend-line-height: map.get($compiled-config, theme, extend, line-height);
+$extend-outline: map.get($compiled-config, theme, extend, outline);
+$extend-text-align: map.get($compiled-config, theme, extend, text-align);
+$extend-text-transform: map.get($compiled-config, theme, extend, text-transform);
+$extend-spacing: map.get($compiled-config, theme, extend, spacing);
+
+// Reset data
+$breakpoints: map.get($compiled-config, theme, breakpoints);
+$colors: map.get($compiled-config, theme, colors);
+$font-family: map.get($compiled-config, theme, font-family);
+$font-size: map.get($compiled-config, theme, font-size);
+$font-weight: map.get($compiled-config, theme, font-weight);
+$letter-spacing: map.get($compiled-config, theme, letter-spacing);
+$line-height: map.get($compiled-config, theme, line-height);
+$outline: map.get($compiled-config, theme, outline);
+$text-align: map.get($compiled-config, theme, text-align);
+$text-transform: map.get($compiled-config, theme, text-transform);
+$spacing: map.get($compiled-config, theme, spacing);
+
+// Select data source
+$breakpoints: if((length($breakpoints) > 0) and ($breakpoints != null), $breakpoints, if(($breakpoints == null), null, $extend-breakpoints));
+$colors: if((length($colors) > 0) and ($colors != null), $colors, if(($colors == null), null, $extend-colors));
+$font-family: if((length($font-family) > 0) and ($font-family != null), $font-family, $extend-font-family);
+$font-size: if((length($font-size) > 0) and ($font-size != null), $font-size, $extend-font-size);
+$font-weight: if((length($font-weight) > 0) and ($font-weight != null), $font-weight, $extend-font-weight);
+$letter-spacing: if((length($letter-spacing) > 0) and ($letter-spacing != null), $letter-spacing, $extend-letter-spacing);
+$line-height: if((length($line-height) > 0) and ($line-height != null), $line-height, $extend-line-height);
+$outline: if((length($outline) > 0) and ($outline != null), $outline, $extend-outline);
+$text-align: if((length($text-align) > 0) and ($text-align != null), $text-align, $extend-text-align);
+$text-transform: if((length($text-transform) > 0) and ($text-transform != null), $text-transform, $extend-text-transform);
+$spacing: if((length($spacing) > 0) and ($spacing != null), $spacing, $extend-spacing);
+
+// -----------------------------------------------------------------------------
+// Mixins
+// -----------------------------------------------------------------------------
+
+// Container
+// Wrap the content in a container breakpoint.
+// @param {String} $size - Key from the map with breakpoints or a custom set width
+// @param {String} $type - Breakpoint type min or max
+// -----------------------------------------------------------------------------
+
+@mixin container($size, $type: min) {
+	// Check if the specified $size exists as a key in the $breakpoints map
+	@if map.has-key($breakpoints, $size) {
+		// If the $size is found in the $breakpoints map, get its corresponding value
+		$size: map.get($breakpoints, $size);
+	} @else {
+		// If the $size is not found in the $breakpoints map, use the provided $size value
+		$size: $size;
+	}
+	
+	// Create a container rule with the specified size and type
+	@container (#{$type}-width: #{$size}) {
+		// Place the content of the container rule here
+		@content;
+	}
+}
+
+// Media
+// Wrap the content in a media breakpoint.
+// @param {String} $size - Key from the map with breakpoints or a custom set width
+// @param {String} $type - Breakpoint type min or max
+// -----------------------------------------------------------------------------
+
+@mixin media($size, $type: min) {
+	// Check if the specified $size exists as a key in the $breakpoints map
+	@if map.has-key($breakpoints, $size) {
+		// If the $size is found in the $breakpoints map, get its corresponding value
+		$size: map.get($breakpoints, $size);
+	} @else {
+		// If the $size is not found in the $breakpoints map, use the provided $size value
+		$size: $size;
+	}
+	
+	// Create a media query with the specified size and type
+	@media (#{$type}-width: #{$size}) {
+		// Place the content of the media query here
+		@content;
+	}
+}
+
+// Generate variables
+// Loop each item in the $variables object and create matching variables.
+// @param {Map} $data - Config object with data map
+// -----------------------------------------------------------------------------
+
+@mixin generate-variables($data) {
+	// Get the 'variables' map from the provided $data
+	$variables: map.get($data, variables);
+	
+	@each $id, $collection in $variables {
+		// Extract properties from the current collection
+		$variable: map.get($collection, 'variable');
+		$variants: map.get($collection, 'variants');
+		// $responsive: map.get($collection, 'responsive');
+
+		@if ($variants != null) {
+			@each $key, $value in $variants {
+				// Generate CSS custom properties (variables) based on the $variable, $key, and $value
+				--#{$prefix-namespace}#{$variable}-#{'' + $key}: #{$value};
+
+				// @if ($responsive == true) {
+				// 	@if (type-of($value) == number) {
+				// 		@each $max-key, $max-value in $variants {
+				// 			@if (type-of($max-value) == number) {
+				// 				@if ($max-value > $value) {
+				// 					--#{$prefix-namespace}#{$variable}-#{'' + $key}-#{'' + $max-key}: #{functions.fluid-size($value, $max-value)};
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
+			}
+		}
+	}
+}
+
+// Generate utility classes
+// Loop each item in the $data object and create matching utility classes.
+// @param {Map} $data - Config object with data map
+// -----------------------------------------------------------------------------
+
+@mixin generate-utilities($data) {
+	// Extract the 'utilities' map from the data
+	$utilities: map.get($data, utilities);
+
+	// Iterate over each key-value pair in the 'utilities' map
+	@each $id, $collection in $utilities {
+		// Extract properties from the current collection
+		$shorthand: map.get($collection, 'shorthand');
+		$classname-type: map.get($collection, 'classname-type');
+		$variable: map.get($collection, 'variable');
+		$properties: map.get($collection, 'properties');
+		$variants: map.get($collection, 'variants');
+		// $responsive: map.get($collection, 'responsive');
+		$classname: null;
+
+		// Iterate over each variant in the 'variants' map
+		@each $key, $value in $variants {
+			// Determine the class name based on 'classname-type'
+			@if ($classname-type == 'shorthand' and length($variants) == 1) {
+				// If the classname type is 'shorthand' and there is only one variant in the 'variants' map
+				$classname: #{$prefix-namespace}#{$prefix-utilities}#{$shorthand};
+			} @else if ($classname-type == 'key') {
+				// If the classname type is 'key'
+				$classname: #{$prefix-namespace}#{$prefix-utilities}#{$key};
+			} @else {
+				// For all other cases
+				$classname: #{$prefix-namespace}#{$prefix-utilities}#{$shorthand}-#{'' + $key};
+			}
+
+			// Create a CSS class based on the generated class name
+			.#{$classname} {
+				// Check if the value is a map or a single value
+				@if (type-of($value) == 'map') {
+					// If it's a map, iterate over each key-value pair
+					@each $deep-key, $deep-value in $value {
+						#{$deep-key}: $deep-value #{$important};
+					}
+				} @else {
+					// If it's a single value, iterate over each property
+					@each $property in $properties {
+						// Check if a variable is defined and if the key is valid
+						@if ($variable != null and not
+							(
+								$key == transparent or
+								$key == current or
+								$key == auto or
+								$key == none
+							)
+						) {
+							// Use CSS custom properties with the generated class name and key
+							#{$property}: var(--#{$prefix-namespace}#{$variable}-#{'' + $key}) #{$important};
+						} @else {
+							// Use the value directly
+							#{$property}: $value #{$important};
+						}
+					}
+				}
+			}
+
+			// @if ($responsive == true) {
+			//   @each $max-key, $max-value in $variants {
+			//     @if ($max-value > $value) {
+			//       $classname: #{$prefix-namespace}#{$prefix-utilities}#{$shorthand}-#{'' + $key}-#{'' + $max-key};
+						
+			//       .#{$classname} {
+			//         @each $property in $properties {
+			//           // Use CSS custom properties with the generated class name and key
+			//           #{$property}: var(--#{$prefix-namespace}#{$variable}-#{'' + $key}-#{'' + $max-key}) #{$important};
+			//         }
+			//       }
+			//     }
+			//   }
+			// }
+		}
+	}
+}

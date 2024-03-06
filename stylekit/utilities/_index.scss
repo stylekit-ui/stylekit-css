@@ -1,0 +1,19 @@
+@use 'stylekit/core';
+
+// Utilities
+@use 'background-color';
+@use 'color';
+// @use 'container';
+@use 'font-family';
+@use 'font-size';
+@use 'font-weight';
+@use 'letter-spacing';
+@use 'line-height';
+@use 'margin';
+@use 'padding';
+@use 'text-align';
+@use 'text-transform';
+
+@if (core.$exclude-utilities != true) {
+	@include core.generate-utilities(core.$compiled-config);
+}

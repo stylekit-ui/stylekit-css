@@ -1,0 +1,94 @@
+@use 'sass:map';
+@use 'stylekit/core';
+@use 'stylekit/core/functions';
+
+$config: (
+	utilities: (
+		margin: (
+			shorthand: margin,
+			variable: space,
+			properties: (margin),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-block: (
+			shorthand: margin-block,
+			variable: space,
+			properties: (margin-block),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-top: (
+			shorthand: margin-top,
+			variable: space,
+			properties: (margin-top),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-bottom: (
+			shorthand: margin-bottom,
+			variable: space,
+			properties: (margin-bottom),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-inline: (
+			shorthand: margin-inline,
+			variable: space,
+			properties: (margin-inline),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-start: (
+			shorthand: margin-start,
+			variable: space,
+			properties: (margin-inline-start),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		),
+		margin-end: (
+			shorthand: margin-end,
+			variable: space,
+			properties: (margin-inline-end),
+			variants: (functions.merge(
+				(
+					none: none,
+					auto: auto
+				),
+				core.$spacing
+			))
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

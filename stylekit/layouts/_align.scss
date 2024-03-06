@@ -1,0 +1,53 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Align
+// Align handles box alignment for elements in grid and flex layouts.
+// -----------------------------------------------------------------------------
+
+$responsive: map.get(core.$compiled-config, layouts, align, responsive);
+$items: map.get(core.$compiled-config, layouts, align, items);
+$content: map.get(core.$compiled-config, layouts, align, content);
+$self: map.get(core.$compiled-config, layouts, align, self);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}align {
+		--#{core.$prefix-namespace}items: normal;
+		--#{core.$prefix-namespace}content: normal;
+		
+		place-items: var(--#{core.$prefix-namespace}items);
+		place-content: var(--#{core.$prefix-namespace}content);
+
+		> * {
+			--#{core.$prefix-namespace}self: auto;
+			
+			place-self: var(--#{core.$prefix-namespace}self);
+		}
+		
+		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
+			$prev-breakpoint: '';
+
+			@each $breakpoint in map.keys(core.$breakpoints) {
+				$current-namespace: #{core.$prefix-namespace}#{$breakpoint};
+				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
+
+				@include core.media($breakpoint) {
+					--#{$current-namespace}-items: var(--#{$prev-namespace}items);
+					--#{$current-namespace}-content: var(--#{$prev-namespace}content);
+					
+					place-items: var(--#{$current-namespace}-items);
+					place-content: var(--#{$current-namespace}-content);
+
+					> * {
+						--#{$current-namespace}-self: var(--#{$prev-namespace}self);
+						
+						place-self: var(--#{$current-namespace}-self);
+					}
+				}
+
+				$prev-breakpoint: #{$breakpoint}-;
+			}
+		}
+	}
+}

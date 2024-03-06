@@ -1,0 +1,74 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Flex
+// Create layout composition with endless flexibility.
+// -----------------------------------------------------------------------------
+
+$responsive: map.get(core.$compiled-config, layouts, flex, responsive);
+$flow: map.get(core.$compiled-config, layouts, flex, flow);
+$wrap: map.get(core.$compiled-config, layouts, flex, wrap);
+$gap: map.get(core.$compiled-config, layouts, flex, gap);
+$basis: map.get(core.$compiled-config, layouts, flex, basis);
+$grow: map.get(core.$compiled-config, layouts, flex, grow);
+$shrink: map.get(core.$compiled-config, layouts, flex, shrink);
+$order: map.get(core.$compiled-config, layouts, flex, order);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}flex {
+		--#{core.$prefix-namespace}flow: #{$flow};
+		--#{core.$prefix-namespace}wrap: #{$wrap};
+		--#{core.$prefix-namespace}gap: #{$gap};
+		
+		display: flex;
+		flex-direction: var(--#{core.$prefix-namespace}flow);
+		flex-wrap: var(--#{core.$prefix-namespace}wrap);
+		gap: var(--#{core.$prefix-namespace}gap);
+
+		> * {
+			--#{core.$prefix-namespace}basis: #{$basis};
+			--#{core.$prefix-namespace}grow: #{$grow};
+			--#{core.$prefix-namespace}shrink: #{$shrink};
+			--#{core.$prefix-namespace}order: #{$order};
+
+			flex-basis: var(--#{core.$prefix-namespace}basis);
+			flex-grow: var(--#{core.$prefix-namespace}grow);
+			flex-shrink: var(--#{core.$prefix-namespace}shrink);
+			order: var(--#{core.$prefix-namespace}order);
+		}
+
+		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
+			$prev-breakpoint: '';
+
+			@each $breakpoint in map.keys(core.$breakpoints) {
+				$current-namespace: #{core.$prefix-namespace}#{$breakpoint};
+				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
+
+				@include core.media($breakpoint) {
+					--#{$current-namespace}-flow: var(--#{$prev-namespace}flow);
+					--#{$current-namespace}-wrap: var(--#{$prev-namespace}wrap);
+					--#{$current-namespace}-gap: var(--#{$prev-namespace}gap);
+
+					flex-direction: var(--#{$current-namespace}-flow);
+					flex-wrap: var(--#{$current-namespace}-wrap);
+					gap: var(--#{$current-namespace}-gap);
+					
+					> * {
+						--#{$current-namespace}-basis: var(--#{$prev-namespace}basis);
+						--#{$current-namespace}-grow: var(--#{$prev-namespace}grow);
+						--#{$current-namespace}-shrink: var(--#{$prev-namespace}shrink);
+						--#{$current-namespace}-order: var(--#{$prev-namespace}order);
+						
+						flex-basis: var(--#{$current-namespace}-basis);
+						flex-grow: var(--#{$current-namespace}-grow);
+						flex-shrink: var(--#{$current-namespace}-shrink);
+						order: var(--#{$current-namespace}-order);
+					}
+				}
+				
+				$prev-breakpoint: #{$breakpoint}-;
+			}
+		}
+	}
+}

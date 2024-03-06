@@ -1,0 +1,107 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:string';
+
+// -----------------------------------------------------------------------------
+// Public functions
+// -----------------------------------------------------------------------------
+
+// Fluid size
+// Clamps a value between an upper and lower bound.
+// @param {value} $min-value - Min value to clamp from
+// @param {value} $max-value - Max value to clamp to
+// @param {value} $min-vw - Start flow from this viewport width
+// @param {value} $max-vw - Stop flow at this viewport width
+// @return {value} - Fluid value with upper and lower bound
+// -----------------------------------------------------------------------------
+
+@function fluid-size($min-value, $max-value, $min-vw: 40rem, $max-vw: 80rem) {
+	// Calculate the factor based on the provided values and viewport sizes
+	$factor: math.div(1, ($max-vw - $min-vw)) * ($max-value - $min-value);
+
+	// Calculate the final value using the factor and viewport units
+	$calc-value: calc(#{$min-value - ($min-vw * $factor)} + #{100vmin * $factor});
+	
+	// Return the result using the clamp() function to limit the value within a range
+	@return clamp(#{$min-value}, #{$calc-value}, #{$max-value});
+}
+
+// -----------------------------------------------------------------------------
+// Private functions
+// -----------------------------------------------------------------------------
+
+// Map sort
+// -----------------------------------------------------------------------------
+
+@function map-sort($map) {
+	// Initialize lists for keys and values
+	$keys: ();
+	$values: ();
+
+	// Iterate over each key-value pair in the map
+	@each $key, $value in $map {
+		// Append the key to the $keys list
+		$keys: append($keys, $key);
+		// Append the value to the $values list
+		$values: append($values, $value);
+	}
+
+	// Create a zipped list of keys and values
+	$list: zip($keys, $values);
+
+	// Initialize an empty map for the sorted pairs
+	$sorted-map: ();
+
+	// Sort the map by finding the smallest pair iteratively
+	@while (length($list) > 0) {
+		// Find the smallest pair in the list
+		$smallest-pair: nth($list, 1);
+		@each $pair in $list {
+			// Compare the value of each pair to find the smallest
+			$value: nth($pair, 2);
+			$smallest-value: nth($smallest-pair, 2);
+			@if ($value < $smallest-value) {
+				$smallest-pair: $pair;
+			}
+		}
+
+		// Extract the key and value of the smallest pair
+		$key: nth($smallest-pair, 1);
+		$value: nth($smallest-pair, 2);
+
+		// Merge the smallest pair into the sorted map
+		$sorted-map: map.merge($sorted-map, ($key: $value));
+
+		// Remove the smallest pair from the list
+		$smallest-pair-index: index($list, $smallest-pair);
+		$new-list: ();
+		@for $index from 1 through length($list) {
+			@if ($index != $smallest-pair-index) {
+				// Append pairs to $new-list except the smallest pair
+				$new-list: append($new-list, nth($list, $index), 'space');
+			}
+		}
+		$list: $new-list;
+	}
+
+	// Return the sorted map
+	@return $sorted-map;
+}
+
+// Merge
+// Multiple map merge function.
+// -----------------------------------------------------------------------------
+
+@function merge($maps...) {
+	// Initialize an empty collection to store the merged maps
+	$collection: ();
+
+	// Iterate over each map in the input arguments
+	@each $map in $maps {
+		// Merge the current map into the collection
+		$collection: map.merge($collection, $map);
+	}
+
+	// Return the merged collection of maps
+	@return $collection;
+}

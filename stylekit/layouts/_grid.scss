@@ -1,0 +1,79 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Grid
+// Build responsive grid systems with layout freedom for versatile designs and
+// seamless user experiences.
+// -----------------------------------------------------------------------------
+
+$responsive: map.get(core.$compiled-config, layouts, grid, responsive);
+$columns: map.get(core.$compiled-config, layouts, grid, columns);
+$column-size: map.get(core.$compiled-config, layouts, grid, column-size);
+$auto-columns: map.get(core.$compiled-config, layouts, grid, auto-columns);
+$flow: map.get(core.$compiled-config, layouts, grid, flow);
+$gap: map.get(core.$compiled-config, layouts, grid, gap);
+$width: map.get(core.$compiled-config, layouts, grid, width);
+$column: map.get(core.$compiled-config, layouts, grid, column);
+$row: map.get(core.$compiled-config, layouts, grid, row);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}grid {
+		--#{core.$prefix-namespace}columns: #{$columns};
+		--#{core.$prefix-namespace}column-size: #{$column-size};
+		--#{core.$prefix-namespace}auto-columns: #{$auto-columns};
+		--#{core.$prefix-namespace}flow: #{$flow};
+		--#{core.$prefix-namespace}gap: #{$gap};
+
+		display: grid;
+		grid-template-columns: repeat(var(--#{core.$prefix-namespace}columns), var(--#{core.$prefix-namespace}column-size));
+		grid-auto-columns: var(--#{core.$prefix-namespace}auto-columns);
+		grid-auto-flow: var(--#{core.$prefix-namespace}flow);
+		gap: var(--#{core.$prefix-namespace}gap);
+
+		> * {
+			--#{core.$prefix-namespace}column: #{$column};
+			--#{core.$prefix-namespace}row: #{$row};
+			
+			grid-column: var(--#{core.$prefix-namespace}column);
+			grid-row: var(--#{core.$prefix-namespace}row);
+			max-width: 100%;
+			min-width: 0;
+			min-height: 0;
+		}
+		
+		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
+			$prev-breakpoint: '';
+
+			@each $breakpoint in map.keys(core.$breakpoints) {
+				$current-namespace: #{core.$prefix-namespace}#{$breakpoint};
+				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
+
+				@include core.media($breakpoint) {
+					--#{$current-namespace}-columns: var(--#{$prev-namespace}columns);
+					--#{$current-namespace}-column-size: var(--#{$prev-namespace}column-size);
+					--#{$current-namespace}-auto-columns: var(--#{$prev-namespace}auto-columns);
+					--#{$current-namespace}-flow: var(--#{$prev-namespace}flow);
+					--#{$current-namespace}-gap: var(--#{$prev-namespace}gap);
+					
+					grid-template-columns: repeat(var(--#{$current-namespace}-columns), var(--#{$current-namespace}-column-size));
+					grid-auto-columns: var(--#{$current-namespace}-auto-columns);
+					grid-auto-flow: var(--#{$current-namespace}-flow);
+					gap: var(--#{$current-namespace}-gap);
+
+					> * {
+						--#{$current-namespace}-column: var(--#{$prev-namespace}column);
+						--#{$current-namespace}-row: var(--#{$prev-namespace}row);
+						
+						grid-column: var(--#{$current-namespace}-column);
+						grid-row: var(--#{$current-namespace}-row);
+					}
+				}
+
+				$prev-breakpoint: #{$breakpoint}-;
+			}
+		}
+	}
+}
+
+

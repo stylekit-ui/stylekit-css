@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	utilities: (
+		container: (
+			shorthand: \@container,
+			classname-type: shorthand,
+			properties: (container-type),
+			variants: (
+				container-type: inline-size
+			)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

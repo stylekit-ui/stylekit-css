@@ -1,0 +1,52 @@
+@use 'sass:map';
+@use 'stylekit/core';
+@use 'stylekit/core/functions';
+
+$config: (
+	utilities: (
+		padding: (
+			shorthand: padding,
+			variable: space,
+			properties: (padding),
+			variants: (core.$spacing)
+		),
+		padding-block: (
+			shorthand: padding-block,
+			variable: space,
+			properties: (padding-block),
+			variants: (core.$spacing)
+		),
+		padding-top: (
+			shorthand: padding-top,
+			variable: space,
+			properties: (padding-top),
+			variants: (core.$spacing)
+		),
+		padding-bottom: (
+			shorthand: padding-bottom,
+			variable: space,
+			properties: (padding-bottom),
+			variants: (core.$spacing)
+		),
+		padding-inline: (
+			shorthand: padding-inline,
+			variable: space,
+			properties: (padding-inline),
+			variants: (core.$spacing)
+		),
+		padding-start: (
+			shorthand: padding-start,
+			variable: space,
+			properties: (padding-inline-start),
+			variants: (core.$spacing)
+		),
+		padding-end: (
+			shorthand: padding-end,
+			variable: space,
+			properties: (padding-inline-end),
+			variants: (core.$spacing)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

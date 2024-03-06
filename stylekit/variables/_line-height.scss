@@ -1,0 +1,13 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	variables: (
+		line-height: (
+			variable: leading,
+			variants: (core.$line-height)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Wrap
+// Wrap the content to encapsulate, pad and align it along the inline size of 
+// an element.
+// -----------------------------------------------------------------------------
+
+$width: map.get(core.$compiled-config, layouts, wrap, width);
+$max-width: map.get(core.$compiled-config, layouts, wrap, max-width);
+$margin-inline: map.get(core.$compiled-config, layouts, wrap, margin-inline);
+$padding-inline: map.get(core.$compiled-config, layouts, wrap, padding-inline);
+$responsive: map.get(core.$compiled-config, layouts, wrap, responsive);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}wrap {
+		--#{core.$prefix-namespace}width: #{$width}; 
+		--#{core.$prefix-namespace}max-width: #{$max-width};
+		--#{core.$prefix-namespace}margin-inline: #{$margin-inline};
+		--#{core.$prefix-namespace}padding-inline: #{$padding-inline};
+
+		width: var(--#{core.$prefix-namespace}width);
+		max-width: var(--#{core.$prefix-namespace}max-width);
+		margin-inline: var(--#{core.$prefix-namespace}margin-inline);
+		padding-inline: var(--#{core.$prefix-namespace}padding-inline);
+
+		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
+			$prev-breakpoint: '';
+
+			@each $breakpoint in map.keys(core.$breakpoints) {
+				$current-namespace: #{core.$prefix-namespace}#{$breakpoint};
+				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
+
+				@include core.media($breakpoint) {
+					--#{$current-namespace}-width: var(--#{$prev-namespace}width);
+					--#{$current-namespace}-max-width: var(--#{$prev-namespace}max-width);
+					--#{$current-namespace}-margin-inline: var(--#{$prev-namespace}margin-inline);
+					--#{$current-namespace}-padding-inline: var(--#{$prev-namespace}padding-inline);
+
+					width: var(--#{$current-namespace}-width);
+					max-width: var(--#{$current-namespace}-max-width);
+					margin-inline: var(--#{$current-namespace}-margin-inline);
+					padding-inline: var(--#{$current-namespace}-padding-inline);
+				}
+				
+				$prev-breakpoint: #{$breakpoint}-;
+			}
+		}
+	}
+}

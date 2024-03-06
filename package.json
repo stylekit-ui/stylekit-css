@@ -1,0 +1,23 @@
+{
+  "name": "stylekit-css",
+  "description": "Stylekit CSS is a toolkit that facilitate your development of user interfaces.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stylekit-ui/stylekit-css.git"
+  },
+  "scripts": {
+    "stylekit:dev": "sass --load-path=./node_modules/stylekit-css --load-path=./ --load-path=./custom-path index.scss dist/stylekit.css --no-source-map --style expanded --watch",
+    "stylekit:build": "sass --load-path=./node_modules/stylekit-css --load-path=./ --load-path=./custom-path index.scss dist/stylekit.min.css --no-source-map --style compressed"
+  },
+  "devDependencies": {
+    "sass": "^1.58.3"
+  },
+  "files": [
+    "**/*.{css}",
+    "**/*.scss",
+    "package.json",
+    "purgecss.config.js"
+  ]
+}

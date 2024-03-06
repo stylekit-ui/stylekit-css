@@ -1,0 +1,61 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Frame
+// Frame a media object with a set aspect ratio. It makes the media object 
+// easier to manage at different screen sizes.
+// -----------------------------------------------------------------------------
+
+$responsive: map.get(core.$compiled-config, layouts, frame, responsive);
+$object-x: map.get(core.$compiled-config, layouts, frame, object-x);
+$object-y: map.get(core.$compiled-config, layouts, frame, object-y);
+$object-fit: map.get(core.$compiled-config, layouts, frame, object-fit);
+$ratio: map.get(core.$compiled-config, layouts, frame, ratio);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}frame {
+		--#{core.$prefix-namespace}object-x: #{$object-x};
+		--#{core.$prefix-namespace}object-y: #{$object-y};
+		--#{core.$prefix-namespace}object-fit: #{$object-fit};
+		--#{core.$prefix-namespace}ratio: #{$ratio};
+
+		position: relative;
+		width: 100%;
+		aspect-ratio: var(--#{core.$prefix-namespace}ratio);
+		overflow: hidden;
+
+		> * {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: var(--#{core.$prefix-namespace}object-fit);
+			object-position: var(--#{core.$prefix-namespace}object-x) var(--#{core.$prefix-namespace}object-y);
+		}
+
+		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
+			$prev-breakpoint: '';
+			
+			@each $breakpoint in map.keys(core.$breakpoints) {
+				$current-namespace: #{core.$prefix-namespace}#{$breakpoint};
+				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
+
+				@include core.media($breakpoint) {
+					--#{$current-namespace}-object-fit: var(--#{$prev-namespace}object-fit);
+					--#{$current-namespace}-ratio: var(--#{$prev-namespace}ratio);
+
+					aspect-ratio: var(--#{$current-namespace}-ratio);
+
+					> * {
+						object-fit: var(--#{$current-namespace}-object-fit);
+					}
+				}
+				$prev-breakpoint: #{$breakpoint}-;
+			}
+		}
+	}
+}

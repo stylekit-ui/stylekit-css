@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	utilities: (
+		background-color: (
+			shorthand: bg,
+			variable: color,
+			properties: (background-color),
+			variants: (core.$colors)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

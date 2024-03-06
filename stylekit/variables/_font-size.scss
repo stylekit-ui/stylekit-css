@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	variables: (
+		font-size: (
+			variable: text,
+			variants: (core.$font-size),
+			// responsive: true
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);

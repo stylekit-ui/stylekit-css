@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+// -----------------------------------------------------------------------------
+// Auto space
+// Auto space sets vertical spacing between elements within the container.
+// -----------------------------------------------------------------------------
+
+$space: map.get(core.$compiled-config, layouts, auto-space, space);
+
+@if (core.$exclude-layouts != true) {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}auto-space {
+		--#{core.$prefix-namespace}space: #{$space};
+		
+		> * + * {
+			margin-top: var(--space);
+		}
+	}
+}

@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use 'stylekit/core';
+
+$config: (
+	utilities: (
+		text-align: (
+			shorthand: text,
+			properties: (text-align),
+			variants: (core.$text-align)
+		)
+	)
+);
+
+core.$compiled-config: map.deep-merge(core.$compiled-config, $config);
