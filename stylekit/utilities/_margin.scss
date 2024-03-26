@@ -10,7 +10,7 @@ $config: (
 			properties: (margin),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -22,7 +22,7 @@ $config: (
 			properties: (margin-block),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -34,7 +34,7 @@ $config: (
 			properties: (margin-top),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -46,7 +46,7 @@ $config: (
 			properties: (margin-bottom),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -58,7 +58,7 @@ $config: (
 			properties: (margin-inline),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -70,7 +70,7 @@ $config: (
 			properties: (margin-inline-start),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
@@ -82,7 +82,7 @@ $config: (
 			properties: (margin-inline-end),
 			variants: (functions.merge(
 				(
-					none: none,
+					none: 0,
 					auto: auto
 				),
 				core.$spacing
