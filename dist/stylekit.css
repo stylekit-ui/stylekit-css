@@ -486,7 +486,7 @@ fieldset {
   --width: 100%;
   --max-width: 90rem;
   --margin-inline: auto;
-  --padding-inline: clamp(1rem, 1vw, 2rem);
+  --padding-inline: clamp(1rem, 2vw, 2rem);
   width: var(--width);
   max-width: var(--max-width);
   margin-inline: var(--margin-inline);
