@@ -15,7 +15,7 @@
 // @return {value} - Fluid value with upper and lower bound
 // -----------------------------------------------------------------------------
 
-@function fluid-size($min-value, $max-value, $min-vw: 40rem, $max-vw: 80rem) {
+@function fluid-size($min-value, $max-value, $min-vw: 30rem, $max-vw: 90rem) {
 	// Calculate the factor based on the provided values and viewport sizes
 	$factor: math.div(1, ($max-vw - $min-vw)) * ($max-value - $min-value);
 
