@@ -84,7 +84,7 @@ The compiled styling file and its path may vary based on your build script.
           danger: red
           ),
         spacing: (
-          xxs: 0.25rem
+          2xs: 0.25rem
         )
       )
       ...
