@@ -46,7 +46,7 @@ $config: map.deep-merge(core.$compiled-config, core.$config);
 	// 2. Add accessible line-height
 	// 3. Improve text rendering
 	body {
-		min-height: 100vh; // 1
+		min-height: 100dvh; // 1
 		font-family: var(--font-sans); 
 		line-height: var(--leading-md); // 2
 		text-rendering: optimizeSpeed; // 3
