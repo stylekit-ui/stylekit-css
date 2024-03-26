@@ -2,14 +2,14 @@
 @use 'stylekit/core';
 
 // -----------------------------------------------------------------------------
-// Auto space
-// Auto space sets vertical spacing between elements within the container.
+// Stack space
+// Stack space sets vertical spacing between elements within the container.
 // -----------------------------------------------------------------------------
 
-$space: map.get(core.$compiled-config, layouts, auto-space, space);
+$space: map.get(core.$compiled-config, layouts, stack-space, space);
 
 @if (core.$exclude-layouts != true) {
-	.#{core.$prefix-namespace}#{core.$prefix-layouts}auto-space {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}stack-space {
 		--#{core.$prefix-namespace}space: #{$space};
 		
 		> * + * {
