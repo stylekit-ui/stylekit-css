@@ -13,7 +13,6 @@ $column-size: map.get(core.$compiled-config, layouts, grid, column-size);
 $auto-columns: map.get(core.$compiled-config, layouts, grid, auto-columns);
 $flow: map.get(core.$compiled-config, layouts, grid, flow);
 $gap: map.get(core.$compiled-config, layouts, grid, gap);
-$width: map.get(core.$compiled-config, layouts, grid, width);
 $column: map.get(core.$compiled-config, layouts, grid, column);
 $row: map.get(core.$compiled-config, layouts, grid, row);
 
