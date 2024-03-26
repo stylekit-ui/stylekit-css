@@ -18,7 +18,6 @@ $grow: map.get(core.$compiled-config, layouts, switch, grow);
 
 @if (core.$exclude-layouts != true) {
 	.#{core.$prefix-namespace}#{core.$prefix-layouts}switch {
-		--#{core.$prefix-namespace}basis: calc((var(--#{core.$prefix-namespace}breakpoint) - 100%) * 999); // 1
 		--#{core.$prefix-namespace}breakpoint: #{$breakpoint};
 		--#{core.$prefix-namespace}gap: #{$gap};
 
@@ -29,7 +28,7 @@ $grow: map.get(core.$compiled-config, layouts, switch, grow);
 		> * {
 			--#{core.$prefix-namespace}grow: #{$grow};
 			
-			flex-basis: max(var(--#{core.$prefix-namespace}basis), 0px);
+			flex-basis: max(calc((var(--#{core.$prefix-namespace}breakpoint) - 100%) * 999), 0px); // 1
 			flex-grow: calc(var(--#{core.$prefix-namespace}grow)); // 2
 		}
 	}
