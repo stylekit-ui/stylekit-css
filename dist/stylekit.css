@@ -22,13 +22,14 @@
   --leading-sm: 1.25;
   --leading-md: 1.5;
   --leading-lg: 1.75;
-  --space-2xs: 0.5rem;
-  --space-xs: 1rem;
-  --space-sm: 1.5rem;
-  --space-md: clamp(2rem, calc(1rem + 2.5vmin), 3rem);
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
   --space-lg: clamp(3rem, calc(2rem + 2.5vmin), 4rem);
   --space-xl: clamp(6rem, calc(4rem + 5vmin), 8rem);
-  --space-2xl: clamp(9rem, calc(6rem + 7.5vmin), 12rem);
+  --space-2xl: clamp(9rem, calc(2rem + 17.5vmin), 16rem);
+  --space-3xl: clamp(18rem, calc(4rem + 35vmin), 32rem);
 }
 
 *,
@@ -650,6 +651,10 @@ fieldset {
   margin: var(--space-2xl);
 }
 
+.margin-3xl {
+  margin: var(--space-3xl);
+}
+
 .margin-block-none {
   margin-block: 0;
 }
@@ -684,6 +689,10 @@ fieldset {
 
 .margin-block-2xl {
   margin-block: var(--space-2xl);
+}
+
+.margin-block-3xl {
+  margin-block: var(--space-3xl);
 }
 
 .margin-top-none {
@@ -722,6 +731,10 @@ fieldset {
   margin-top: var(--space-2xl);
 }
 
+.margin-top-3xl {
+  margin-top: var(--space-3xl);
+}
+
 .margin-bottom-none {
   margin-bottom: 0;
 }
@@ -756,6 +769,10 @@ fieldset {
 
 .margin-bottom-2xl {
   margin-bottom: var(--space-2xl);
+}
+
+.margin-bottom-3xl {
+  margin-bottom: var(--space-3xl);
 }
 
 .margin-inline-none {
@@ -794,6 +811,10 @@ fieldset {
   margin-inline: var(--space-2xl);
 }
 
+.margin-inline-3xl {
+  margin-inline: var(--space-3xl);
+}
+
 .margin-start-none {
   margin-inline-start: 0;
 }
@@ -828,6 +849,10 @@ fieldset {
 
 .margin-start-2xl {
   margin-inline-start: var(--space-2xl);
+}
+
+.margin-start-3xl {
+  margin-inline-start: var(--space-3xl);
 }
 
 .margin-end-none {
@@ -866,6 +891,10 @@ fieldset {
   margin-inline-end: var(--space-2xl);
 }
 
+.margin-end-3xl {
+  margin-inline-end: var(--space-3xl);
+}
+
 .padding-none {
   padding: 0;
 }
@@ -896,6 +925,10 @@ fieldset {
 
 .padding-2xl {
   padding: var(--space-2xl);
+}
+
+.padding-3xl {
+  padding: var(--space-3xl);
 }
 
 .padding-block-none {
@@ -930,6 +963,10 @@ fieldset {
   padding-block: var(--space-2xl);
 }
 
+.padding-block-3xl {
+  padding-block: var(--space-3xl);
+}
+
 .padding-top-none {
   padding-top: 0;
 }
@@ -960,6 +997,10 @@ fieldset {
 
 .padding-top-2xl {
   padding-top: var(--space-2xl);
+}
+
+.padding-top-3xl {
+  padding-top: var(--space-3xl);
 }
 
 .padding-bottom-none {
@@ -994,6 +1035,10 @@ fieldset {
   padding-bottom: var(--space-2xl);
 }
 
+.padding-bottom-3xl {
+  padding-bottom: var(--space-3xl);
+}
+
 .padding-inline-none {
   padding-inline: 0;
 }
@@ -1024,6 +1069,10 @@ fieldset {
 
 .padding-inline-2xl {
   padding-inline: var(--space-2xl);
+}
+
+.padding-inline-3xl {
+  padding-inline: var(--space-3xl);
 }
 
 .padding-start-none {
@@ -1058,6 +1107,10 @@ fieldset {
   padding-inline-start: var(--space-2xl);
 }
 
+.padding-start-3xl {
+  padding-inline-start: var(--space-3xl);
+}
+
 .padding-end-none {
   padding-inline-end: 0;
 }
@@ -1088,6 +1141,10 @@ fieldset {
 
 .padding-end-2xl {
   padding-inline-end: var(--space-2xl);
+}
+
+.padding-end-3xl {
+  padding-inline-end: var(--space-3xl);
 }
 
 .text-left {
