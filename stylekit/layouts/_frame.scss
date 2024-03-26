@@ -8,16 +8,14 @@
 // -----------------------------------------------------------------------------
 
 $responsive: map.get(core.$compiled-config, layouts, frame, responsive);
-$object-x: map.get(core.$compiled-config, layouts, frame, object-x);
-$object-y: map.get(core.$compiled-config, layouts, frame, object-y);
-$object-fit: map.get(core.$compiled-config, layouts, frame, object-fit);
+$focus: map.get(core.$compiled-config, layouts, frame, focus);
+$fit: map.get(core.$compiled-config, layouts, frame, fit);
 $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 
 @if (core.$exclude-layouts != true) {
 	.#{core.$prefix-namespace}#{core.$prefix-layouts}frame {
-		--#{core.$prefix-namespace}object-x: #{$object-x};
-		--#{core.$prefix-namespace}object-y: #{$object-y};
-		--#{core.$prefix-namespace}object-fit: #{$object-fit};
+		--#{core.$prefix-namespace}focus: #{$focus};
+		--#{core.$prefix-namespace}fit: #{$fit};
 		--#{core.$prefix-namespace}ratio: #{$ratio};
 
 		position: relative;
@@ -33,8 +31,8 @@ $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 			left: 0;
 			width: 100%;
 			height: 100%;
-			object-fit: var(--#{core.$prefix-namespace}object-fit);
-			object-position: var(--#{core.$prefix-namespace}object-x) var(--#{core.$prefix-namespace}object-y);
+			object-fit: var(--#{core.$prefix-namespace}fit);
+			object-position: var(--#{core.$prefix-namespace}focus);
 		}
 
 		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
@@ -45,13 +43,13 @@ $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
 
 				@include core.media($breakpoint) {
-					--#{$current-namespace}-object-fit: var(--#{$prev-namespace}object-fit);
+					--#{$current-namespace}-fit: var(--#{$prev-namespace}fit);
 					--#{$current-namespace}-ratio: var(--#{$prev-namespace}ratio);
 
 					aspect-ratio: var(--#{$current-namespace}-ratio);
 
 					> * {
-						object-fit: var(--#{$current-namespace}-object-fit);
+						object-fit: var(--#{$current-namespace}-fit);
 					}
 				}
 				$prev-breakpoint: #{$breakpoint}-;
