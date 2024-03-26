@@ -45,8 +45,8 @@ $default-config: (
 		// Defaults
 		extend: (
 			breakpoints: (
-				sm: 360px,
-				md: 720px,
+				sm: 480px,
+				md: 960px,
 				lg: 1440px
 			),
 			colors: (
@@ -61,13 +61,13 @@ $default-config: (
 				mono: 'monospace'
 			),
 			font-size: (
-				xxs: 0.75rem,
+				2xs: 0.75rem,
 				xs: 0.875rem,
 				sm: 1rem,
 				md: functions.fluid-size(1.125rem, 1.25rem),
 				lg: functions.fluid-size(1.375rem, 1.5rem),
 				xl: functions.fluid-size(1.75rem, 2rem),
-				xxl: functions.fluid-size(2rem, 4rem)
+				2xl: functions.fluid-size(2rem, 4rem)
 			),
 			font-weight: (
 				light: 300,
@@ -84,7 +84,7 @@ $default-config: (
 				none: 1,
 				sm: 1.25,
 				md: 1.5,
-				lg: 2,
+				lg: 1.75,
 			),
 			text-align: (
 				left: left,
@@ -97,13 +97,13 @@ $default-config: (
 				caps: capitalize
 			),
 			spacing: (
-				xxs: 0.5rem,
+				2xs: 0.5rem,
 				xs: 1rem,
 				sm: 1.5rem,
 				md: functions.fluid-size(2rem, 3rem),
 				lg: functions.fluid-size(3rem, 4rem),
 				xl: functions.fluid-size(6rem, 8rem),
-				xxl: functions.fluid-size(9rem, 12rem)
+				2xl: functions.fluid-size(9rem, 12rem)
 			),
 		),
 	),
@@ -115,8 +115,13 @@ $default-config: (
 			content: normal,
 			self: auto
 		),
-		auto-space: (
-			space: 1em
+		auto-grid: (
+			responsive: true,
+			columns: auto-fill,
+			column-size: 20rem,
+			gap: 0,
+			column: auto,
+			row: auto
 		),
 		flex: (
 			responsive: true,
@@ -130,9 +135,8 @@ $default-config: (
 		),
 		frame: (
 			responsive: true,
-			object-x: 50%,
-			object-y: 50%,
-			object-fit: cover,
+			focus: 50% 50%,
+			fit: cover,
 			ratio: '1/1'
 		),
 		grid: (
@@ -145,6 +149,9 @@ $default-config: (
 			column: auto,
 			row: auto
 		),
+		stack-space: (
+			space: 1em
+		),
 		switch: (
 			breakpoint: 0,
 			gap: 0,
@@ -153,9 +160,9 @@ $default-config: (
 		wrap: (
 			responsive: false,
 			width: 100%,
-			max-width: 80rem,
+			max-width: 90rem,
 			margin-inline: auto,
-			padding-inline: clamp(1rem, 2%, 2rem)
+			padding-inline: clamp(1rem, 1vw, 2rem)
 		)
 	)
 ) !default;
@@ -311,7 +318,17 @@ $spacing: if((length($spacing) > 0) and ($spacing != null), $spacing, $extend-sp
 		@if ($variants != null) {
 			@each $key, $value in $variants {
 				// Generate CSS custom properties (variables) based on the $variable, $key, and $value
-				--#{$prefix-namespace}#{$variable}-#{'' + $key}: #{$value};
+				@if ($variable != null and not
+					(
+						$key == transparent or
+						$key == current or
+						$key == auto or
+						$key == none
+					)
+				) {
+					// Use CSS custom property
+					--#{$prefix-namespace}#{$variable}-#{'' + $key}: #{$value};
+				}
 
 				// @if ($responsive == true) {
 				// 	@if (type-of($value) == number) {
