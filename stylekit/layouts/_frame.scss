@@ -43,6 +43,7 @@ $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 				$prev-namespace: #{core.$prefix-namespace}#{$prev-breakpoint};
 
 				@include core.media($breakpoint) {
+					--#{$current-namespace}-focus: var(--#{$prev-namespace}focus);
 					--#{$current-namespace}-fit: var(--#{$prev-namespace}fit);
 					--#{$current-namespace}-ratio: var(--#{$prev-namespace}ratio);
 
@@ -50,6 +51,7 @@ $ratio: map.get(core.$compiled-config, layouts, frame, ratio);
 
 					> * {
 						object-fit: var(--#{$current-namespace}-fit);
+						object-position: var(--#{$current-namespace}-focus);
 					}
 				}
 				$prev-breakpoint: #{$breakpoint}-;
