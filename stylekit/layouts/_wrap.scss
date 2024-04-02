@@ -7,22 +7,28 @@
 // an element.
 // -----------------------------------------------------------------------------
 
+$responsive: map.get(core.$compiled-config, layouts, wrap, responsive);
 $width: map.get(core.$compiled-config, layouts, wrap, width);
 $max-width: map.get(core.$compiled-config, layouts, wrap, max-width);
+// $margin-block: map.get(core.$compiled-config, layouts, wrap, margin-block);
 $margin-inline: map.get(core.$compiled-config, layouts, wrap, margin-inline);
+// $padding-block: map.get(core.$compiled-config, layouts, wrap, padding-block);
 $padding-inline: map.get(core.$compiled-config, layouts, wrap, padding-inline);
-$responsive: map.get(core.$compiled-config, layouts, wrap, responsive);
 
 @if (core.$exclude-layouts != true) {
 	.#{core.$prefix-namespace}#{core.$prefix-layouts}wrap {
 		--#{core.$prefix-namespace}width: #{$width}; 
 		--#{core.$prefix-namespace}max-width: #{$max-width};
+		// --#{core.$prefix-namespace}margin-block: #{$margin-block};
 		--#{core.$prefix-namespace}margin-inline: #{$margin-inline};
+		// --#{core.$prefix-namespace}padding-block: #{$padding-block};
 		--#{core.$prefix-namespace}padding-inline: #{$padding-inline};
 
 		width: var(--#{core.$prefix-namespace}width);
 		max-width: var(--#{core.$prefix-namespace}max-width);
+		// margin-block: var(--#{core.$prefix-namespace}margin-block);
 		margin-inline: var(--#{core.$prefix-namespace}margin-inline);
+		// padding-block: var(--#{core.$prefix-namespace}padding-block);
 		padding-inline: var(--#{core.$prefix-namespace}padding-inline);
 
 		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
@@ -35,12 +41,16 @@ $responsive: map.get(core.$compiled-config, layouts, wrap, responsive);
 				@include core.media($breakpoint) {
 					--#{$current-namespace}-width: var(--#{$prev-namespace}width);
 					--#{$current-namespace}-max-width: var(--#{$prev-namespace}max-width);
+					// --#{$current-namespace}-margin-block: var(--#{$prev-namespace}margin-block);
 					--#{$current-namespace}-margin-inline: var(--#{$prev-namespace}margin-inline);
+					// --#{$current-namespace}-padding-block: var(--#{$prev-namespace}padding-block);
 					--#{$current-namespace}-padding-inline: var(--#{$prev-namespace}padding-inline);
 
 					width: var(--#{$current-namespace}-width);
 					max-width: var(--#{$current-namespace}-max-width);
+					// margin-block: var(--#{$current-namespace}-margin-block);
 					margin-inline: var(--#{$current-namespace}-margin-inline);
+					// padding-block: var(--#{$current-namespace}-padding-block);
 					padding-inline: var(--#{$current-namespace}-padding-inline);
 				}
 				
