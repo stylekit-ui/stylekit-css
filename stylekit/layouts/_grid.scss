@@ -13,8 +13,11 @@ $column-size: map.get(core.$compiled-config, layouts, grid, column-size);
 $auto-columns: map.get(core.$compiled-config, layouts, grid, auto-columns);
 $flow: map.get(core.$compiled-config, layouts, grid, flow);
 $gap: map.get(core.$compiled-config, layouts, grid, gap);
+$items: map.get(core.$compiled-config, layouts, grid, items);
+$content: map.get(core.$compiled-config, layouts, grid, content);
 $column: map.get(core.$compiled-config, layouts, grid, column);
 $row: map.get(core.$compiled-config, layouts, grid, row);
+$self: map.get(core.$compiled-config, layouts, grid, self);
 
 @if (core.$exclude-layouts != true) {
 	.#{core.$prefix-namespace}#{core.$prefix-layouts}grid {
@@ -23,19 +26,26 @@ $row: map.get(core.$compiled-config, layouts, grid, row);
 		--#{core.$prefix-namespace}auto-columns: #{$auto-columns};
 		--#{core.$prefix-namespace}flow: #{$flow};
 		--#{core.$prefix-namespace}gap: #{$gap};
+		--#{core.$prefix-namespace}items: normal;
+		--#{core.$prefix-namespace}content: normal;
 
 		display: grid;
 		grid-template-columns: repeat(var(--#{core.$prefix-namespace}columns), var(--#{core.$prefix-namespace}column-size));
 		grid-auto-columns: var(--#{core.$prefix-namespace}auto-columns);
 		grid-auto-flow: var(--#{core.$prefix-namespace}flow);
 		gap: var(--#{core.$prefix-namespace}gap);
+		place-items: var(--#{core.$prefix-namespace}items);
+		place-content: var(--#{core.$prefix-namespace}content);
+		
 
 		> * {
 			--#{core.$prefix-namespace}column: #{$column};
 			--#{core.$prefix-namespace}row: #{$row};
+			--#{core.$prefix-namespace}self: auto;
 			
 			grid-column: var(--#{core.$prefix-namespace}column);
 			grid-row: var(--#{core.$prefix-namespace}row);
+			place-self: var(--#{core.$prefix-namespace}self);
 			max-width: 100%;
 			min-width: 0;
 			min-height: 0;
@@ -54,18 +64,24 @@ $row: map.get(core.$compiled-config, layouts, grid, row);
 					--#{$current-namespace}-auto-columns: var(--#{$prev-namespace}auto-columns);
 					--#{$current-namespace}-flow: var(--#{$prev-namespace}flow);
 					--#{$current-namespace}-gap: var(--#{$prev-namespace}gap);
+					--#{$current-namespace}-items: var(--#{$prev-namespace}items);
+					--#{$current-namespace}-content: var(--#{$prev-namespace}content);
 					
 					grid-template-columns: repeat(var(--#{$current-namespace}-columns), var(--#{$current-namespace}-column-size));
 					grid-auto-columns: var(--#{$current-namespace}-auto-columns);
 					grid-auto-flow: var(--#{$current-namespace}-flow);
 					gap: var(--#{$current-namespace}-gap);
+					place-items: var(--#{$current-namespace}-items);
+					place-content: var(--#{$current-namespace}-content);
 
 					> * {
 						--#{$current-namespace}-column: var(--#{$prev-namespace}column);
 						--#{$current-namespace}-row: var(--#{$prev-namespace}row);
+						--#{$current-namespace}-self: var(--#{$prev-namespace}self);
 						
 						grid-column: var(--#{$current-namespace}-column);
 						grid-row: var(--#{$current-namespace}-row);
+						place-self: var(--#{$current-namespace}-self);
 					}
 				}
 
@@ -74,5 +90,3 @@ $row: map.get(core.$compiled-config, layouts, grid, row);
 		}
 	}
 }
-
-
