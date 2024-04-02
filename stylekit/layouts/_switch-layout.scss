@@ -3,8 +3,8 @@
 
 // -----------------------------------------------------------------------------
 // Switch
-// Switch from a single-column layout to a multi-column layout when the width of 
-// the parent element equals the specified breakpoint.
+// Switch from a single-column to a multi-column layout when the width of the 
+// parent element equals the specified breakpoint.
 //
 // 1. Multiply the switch flag by an arbitrarily large value to scale it to
 //    either very negative or very positive and apply it as the flex-basis. 
@@ -12,12 +12,12 @@
 // 2. The calc function enables the option to use fractions for the grow value.
 // -----------------------------------------------------------------------------
 
-$breakpoint: map.get(core.$compiled-config, layouts, switch, breakpoint);
-$gap: map.get(core.$compiled-config, layouts, switch, gap);
-$grow: map.get(core.$compiled-config, layouts, switch, grow);
+$breakpoint: map.get(core.$compiled-config, layouts, switch-layout, breakpoint);
+$gap: map.get(core.$compiled-config, layouts, switch-layout, gap);
+$grow: map.get(core.$compiled-config, layouts, switch-layout, grow);
 
 @if (core.$exclude-layouts != true) {
-	.#{core.$prefix-namespace}#{core.$prefix-layouts}switch {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}switch-layout {
 		--#{core.$prefix-namespace}breakpoint: #{$breakpoint};
 		--#{core.$prefix-namespace}gap: #{$gap};
 
