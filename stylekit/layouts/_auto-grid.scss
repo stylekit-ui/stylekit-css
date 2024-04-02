@@ -9,8 +9,8 @@ $responsive: map.get(core.$compiled-config, layouts, auto-grid, responsive);
 $columns: map.get(core.$compiled-config, layouts, auto-grid, columns);
 $column-size: map.get(core.$compiled-config, layouts, auto-grid, column-size);
 $gap: map.get(core.$compiled-config, layouts, auto-grid, gap);
-$column: map.get(core.$compiled-config, layouts, auto-grid, column);
-$row: map.get(core.$compiled-config, layouts, auto-grid, row);
+// $column: map.get(core.$compiled-config, layouts, auto-grid, column);
+// $row: map.get(core.$compiled-config, layouts, auto-grid, row);
 
 @if (core.$exclude-layouts != true) {
 	.#{core.$prefix-namespace}#{core.$prefix-layouts}auto-grid {
@@ -23,11 +23,11 @@ $row: map.get(core.$compiled-config, layouts, auto-grid, row);
 		gap: var(--#{core.$prefix-namespace}gap);
 
 		> * {
-			--#{core.$prefix-namespace}column: #{$column};
-			--#{core.$prefix-namespace}row: #{$row};
+			// --#{core.$prefix-namespace}column: #{$column};
+			// --#{core.$prefix-namespace}row: #{$row};
 			
-			grid-column: var(--#{core.$prefix-namespace}column);
-			grid-row: var(--#{core.$prefix-namespace}row);
+			// grid-column: var(--#{core.$prefix-namespace}column);
+			// grid-row: var(--#{core.$prefix-namespace}row);
 			max-width: 100%;
 			min-width: 0;
 			min-height: 0;
@@ -48,13 +48,13 @@ $row: map.get(core.$compiled-config, layouts, auto-grid, row);
 					grid-template-columns: repeat(var(--#{$current-namespace}-columns), minmax(min(100%, var(--#{$current-namespace}-column-size)), 1fr));
 					gap: var(--#{$current-namespace}-gap);
 
-					> * {
-						--#{$current-namespace}-column: var(--#{$prev-namespace}column);
-						--#{$current-namespace}-row: var(--#{$prev-namespace}row);
+					// > * {
+					// 	--#{$current-namespace}-column: var(--#{$prev-namespace}column);
+					// 	--#{$current-namespace}-row: var(--#{$prev-namespace}row);
 						
-						grid-column: var(--#{$current-namespace}-column);
-						grid-row: var(--#{$current-namespace}-row);
-					}
+					// 	grid-column: var(--#{$current-namespace}-column);
+					// 	grid-row: var(--#{$current-namespace}-row);
+					// }
 				}
 
 				$prev-breakpoint: #{$breakpoint}-;
