@@ -48,7 +48,7 @@ $config: map.deep-merge(core.$compiled-config, core.$config);
 	body {
 		min-height: 100dvh; // 1
 		font-family: var(--font-sans); 
-		line-height: var(--leading-md); // 2
+		line-height: var(--leading-base); // 2
 		text-rendering: optimizeSpeed; // 3
 	}
 
