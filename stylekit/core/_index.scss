@@ -45,9 +45,9 @@ $default-config: (
 		// Defaults
 		extend: (
 			breakpoints: (
-				sm: 480px,
-				md: 960px,
-				lg: 1440px
+				sm: 30em,
+				md: 60em,
+				lg: 90em
 			),
 			colors: (
 				white: hsl(0, 0%, 100%),
@@ -64,11 +64,10 @@ $default-config: (
 				2xs: 0.75rem,
 				xs: 0.875rem,
 				sm: 1rem,
-				md: 1.125rem,
-				lg: functions.fluid-size(1.25rem, 1.5rem),
-				xl: functions.fluid-size(1.375rem, 2rem),
-				2xl: functions.fluid-size(1.5rem, 3rem),
-				3xl: functions.fluid-size(2rem, 4rem)
+				md: 1.25rem,
+				lg: 1.5rem,
+				xl: functions.fluid-size(2rem, 3rem),
+				2xl: functions.fluid-size(3rem, 6rem)
 			),
 			font-weight: (
 				light: 300,
@@ -82,15 +81,14 @@ $default-config: (
 				lg: 0.0375em
 			),
 			line-height: (
-				none: 1,
 				sm: 1.25,
-				md: 1.5,
-				lg: 1.75,
+				base: 1.5,
+				lg: 1.75
 			),
 			text-align: (
-				left: left,
+				start: inline-start,
 				center: center,
-				right: right
+				end: inline-end
 			),
 			text-transform: (
 				upper: uppercase,
@@ -98,23 +96,29 @@ $default-config: (
 				caps: capitalize
 			),
 			spacing: (
-				2xs: 0.25rem,
-				xs: 0.5rem,
-				sm: 1rem,
+				2xs: 0.5rem,
+				xs: 1rem,
+				sm: 1.5rem,
 				md: 2rem,
-				lg: functions.fluid-size(3rem, 4rem),
-				xl: functions.fluid-size(6rem, 8rem),
-				2xl: functions.fluid-size(9rem, 16rem),
-				3xl: functions.fluid-size(18rem, 32rem)
+				lg: functions.fluid-size(3rem, 3.75rem),
+				xl: functions.fluid-size(4rem, 6rem),
+				2xl: functions.fluid-size(6rem, 12rem)
 			),
 		),
 	),
 
 	layouts: (
-		align: (
+		auto-flex: (
 			responsive: true,
+			flow: row,
+			wrap: wrap,
+			gap: 0,
 			items: normal,
 			content: normal,
+			basis: auto,
+			grow: 0,
+			shrink: 1,
+			order: 0,
 			self: auto
 		),
 		auto-grid: (
@@ -124,16 +128,6 @@ $default-config: (
 			gap: 0,
 			column: auto,
 			row: auto
-		),
-		flex: (
-			responsive: true,
-			flow: row,
-			wrap: nowrap,
-			gap: 0,
-			basis: auto,
-			grow: 0,
-			shrink: 1,
-			order: 0
 		),
 		frame: (
 			responsive: true,
@@ -145,16 +139,19 @@ $default-config: (
 			responsive: true,
 			columns: 1,
 			column-size: 1fr,
-			auto-columns: normal,
+			auto-columns: auto,
 			flow: row,
 			gap: 0,
+			items: normal,
+			content: normal,
 			column: auto,
-			row: auto
+			row: auto,
+			self: auto
 		),
 		stack-space: (
 			space: 1em
 		),
-		switch: (
+		switch-layout: (
 			breakpoint: 0,
 			gap: 0,
 			grow: 1
@@ -163,8 +160,10 @@ $default-config: (
 			responsive: false,
 			width: 100%,
 			max-width: 90rem,
+			// margin-block: 0,
 			margin-inline: auto,
-			padding-inline: clamp(1rem, 2vw, 2rem)
+			// padding-block: 0,
+			padding-inline: clamp(var(--space-xs), 2vw, var(--space-sm))
 		)
 	)
 ) !default;
