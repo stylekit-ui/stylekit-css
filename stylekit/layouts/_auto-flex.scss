@@ -2,40 +2,49 @@
 @use 'stylekit/core';
 
 // -----------------------------------------------------------------------------
-// Flex
+// Auto flex
 // Create layout composition with endless flexibility.
 // -----------------------------------------------------------------------------
 
-$responsive: map.get(core.$compiled-config, layouts, flex, responsive);
-$flow: map.get(core.$compiled-config, layouts, flex, flow);
-$wrap: map.get(core.$compiled-config, layouts, flex, wrap);
-$gap: map.get(core.$compiled-config, layouts, flex, gap);
-$basis: map.get(core.$compiled-config, layouts, flex, basis);
-$grow: map.get(core.$compiled-config, layouts, flex, grow);
-$shrink: map.get(core.$compiled-config, layouts, flex, shrink);
-$order: map.get(core.$compiled-config, layouts, flex, order);
+$responsive: map.get(core.$compiled-config, layouts, auto-flex, responsive);
+$flow: map.get(core.$compiled-config, layouts, auto-flex, flow);
+$wrap: map.get(core.$compiled-config, layouts, auto-flex, wrap);
+$gap: map.get(core.$compiled-config, layouts, auto-flex, gap);
+$items: map.get(core.$compiled-config, layouts, auto-flex, items);
+$content: map.get(core.$compiled-config, layouts, auto-flex, content);
+$basis: map.get(core.$compiled-config, layouts, auto-flex, basis);
+$grow: map.get(core.$compiled-config, layouts, auto-flex, grow);
+$shrink: map.get(core.$compiled-config, layouts, auto-flex, shrink);
+$order: map.get(core.$compiled-config, layouts, auto-flex, order);
+$self: map.get(core.$compiled-config, layouts, auto-flex, self);
 
 @if (core.$exclude-layouts != true) {
-	.#{core.$prefix-namespace}#{core.$prefix-layouts}flex {
+	.#{core.$prefix-namespace}#{core.$prefix-layouts}auto-flex {
 		--#{core.$prefix-namespace}flow: #{$flow};
 		--#{core.$prefix-namespace}wrap: #{$wrap};
 		--#{core.$prefix-namespace}gap: #{$gap};
+		--#{core.$prefix-namespace}items: normal;
+		--#{core.$prefix-namespace}content: normal;
 		
 		display: flex;
 		flex-direction: var(--#{core.$prefix-namespace}flow);
 		flex-wrap: var(--#{core.$prefix-namespace}wrap);
 		gap: var(--#{core.$prefix-namespace}gap);
+		place-items: var(--#{core.$prefix-namespace}items);
+		place-content: var(--#{core.$prefix-namespace}content);
 
 		> * {
 			--#{core.$prefix-namespace}basis: #{$basis};
 			--#{core.$prefix-namespace}grow: #{$grow};
 			--#{core.$prefix-namespace}shrink: #{$shrink};
 			--#{core.$prefix-namespace}order: #{$order};
+			--#{core.$prefix-namespace}self: auto;
 
 			flex-basis: var(--#{core.$prefix-namespace}basis);
 			flex-grow: var(--#{core.$prefix-namespace}grow);
 			flex-shrink: var(--#{core.$prefix-namespace}shrink);
 			order: var(--#{core.$prefix-namespace}order);
+			place-self: var(--#{core.$prefix-namespace}self);
 		}
 
 		@if ((($responsive == true) or (core.$all-responsive == true)) and (core.$breakpoints != null)) {
@@ -49,21 +58,27 @@ $order: map.get(core.$compiled-config, layouts, flex, order);
 					--#{$current-namespace}-flow: var(--#{$prev-namespace}flow);
 					--#{$current-namespace}-wrap: var(--#{$prev-namespace}wrap);
 					--#{$current-namespace}-gap: var(--#{$prev-namespace}gap);
+					--#{$current-namespace}-items: var(--#{$prev-namespace}items);
+					--#{$current-namespace}-content: var(--#{$prev-namespace}content);
 
 					flex-direction: var(--#{$current-namespace}-flow);
 					flex-wrap: var(--#{$current-namespace}-wrap);
 					gap: var(--#{$current-namespace}-gap);
+					place-items: var(--#{$current-namespace}-items);
+					place-content: var(--#{$current-namespace}-content);
 					
 					> * {
 						--#{$current-namespace}-basis: var(--#{$prev-namespace}basis);
 						--#{$current-namespace}-grow: var(--#{$prev-namespace}grow);
 						--#{$current-namespace}-shrink: var(--#{$prev-namespace}shrink);
 						--#{$current-namespace}-order: var(--#{$prev-namespace}order);
+						--#{$current-namespace}-self: var(--#{$prev-namespace}self);
 						
 						flex-basis: var(--#{$current-namespace}-basis);
 						flex-grow: var(--#{$current-namespace}-grow);
 						flex-shrink: var(--#{$current-namespace}-shrink);
 						order: var(--#{$current-namespace}-order);
+						place-self: var(--#{$current-namespace}-self);
 					}
 				}
 				
